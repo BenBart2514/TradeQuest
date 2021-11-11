@@ -1,0 +1,13 @@
+<div class='header'>
+<h1>New Hero</h1>
+</div>
+<h3>What is your Hero's name?</h3>
+<%= form_with model: @hero do |f| %>
+    <p>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+    </p>
+    <p>
+        <%= f.submit %>
+    </p>
+<% end %>

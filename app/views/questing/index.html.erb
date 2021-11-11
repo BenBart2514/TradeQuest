@@ -1,1 +1,19 @@
-<h1>Questing</h1>
+<div class='header'>
+    <h1>Questing</h1>
+</div>
+<nav class='topnav'>
+    <span>
+    <%= link_to "Go to Marketplace", root_path %>
+    </span>
+    <span>
+    <% if user_signed_in? %>
+        <%= current_user.hero.name %>
+        |
+        <%= link_to 'Logout', destroy_user_session_path, method: 'delete' %>
+    <% else %>
+        <%= link_to 'Login', new_user_session_path %>
+        |
+        <%= link_to 'Sign Up', new_user_registration_path %>
+    <% end %>
+    </span>
+</nav>
