@@ -4,7 +4,7 @@ class MarketplaceController < ApplicationController
       redirect_to new_hero_path
     end
     @page_name = "Marketplace"
-    @top_link = "Go Questing"
+    @top_link = "Questing"
     @link_path = questing_path
   end
 end

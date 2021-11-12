@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_12_002353) do
+ActiveRecord::Schema.define(version: 2021_11_12_045344) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,6 +79,18 @@ ActiveRecord::Schema.define(version: 2021_11_12_002353) do
     t.index ["inventory_id"], name: "index_items_on_inventory_id"
   end
 
+  create_table "listings", force: :cascade do |t|
+    t.bigint "hero_id", null: false
+    t.bigint "item_id", null: false
+    t.bigint "weapon_id", null: false
+    t.integer "price"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["hero_id"], name: "index_listings_on_hero_id"
+    t.index ["item_id"], name: "index_listings_on_item_id"
+    t.index ["weapon_id"], name: "index_listings_on_weapon_id"
+  end
+
   create_table "qualities", force: :cascade do |t|
     t.string "name"
     t.integer "modifier"
@@ -126,6 +138,9 @@ ActiveRecord::Schema.define(version: 2021_11_12_002353) do
   add_foreign_key "heros", "users"
   add_foreign_key "inventories", "heros"
   add_foreign_key "items", "inventories"
+  add_foreign_key "listings", "heros"
+  add_foreign_key "listings", "items"
+  add_foreign_key "listings", "weapons"
   add_foreign_key "weapons", "enchants"
   add_foreign_key "weapons", "inventories"
   add_foreign_key "weapons", "qualities"

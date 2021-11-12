@@ -15,15 +15,25 @@
  */
 
 * {
-    margin: 0 auto;
+    margin: 0;
     font-family: cursive;
     font-weight: bold;
+}
+
+main {
+    margin: 5px 10%;
+}
+
+#char_stats {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 10%;
 }
 
 .account {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    align-items: center;
     margin-top: 20px;
 }
 
@@ -47,8 +57,8 @@
 
 .topnav {
     display: flex;
-    width: 100%;
     justify-content: space-between;
+    margin: 5px 10%;
 }
 
 h1 {

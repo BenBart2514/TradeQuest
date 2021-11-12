@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  hero: one
+  item: one
+  weapon: one
+  price: 1
+
+two:
+  hero: two
+  item: two
+  weapon: two
+  price: 1
