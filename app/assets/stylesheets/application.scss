@@ -16,18 +16,48 @@
 
 * {
     margin: 0 auto;
+    font-family: cursive;
+    font-weight: bold;
 }
 
 .header {
-    background-image: url(images/header.jpg);
-    height: 80px;
+    background-image: url(asset_path('header.jpg'));
+    background-size: cover;
+    background-position: 0%;
+    height: 100px;
     display: flex;
     justify-content: center;
     align-items: center;
+    h1 {
+        color: orangered;
+        text-shadow: 1px 1px 2px black;
+    }
 }
 
 .topnav {
     display: flex;
     width: 100%;
     justify-content: space-between;
+}
+
+h1 {
+    font-size: 200%;
+}
+
+@media only screen and (max-width: 375px) {
+    * {
+        font-size: 95%;
+    }
+}
+
+@media only screen and (min-width: 700px) and (max-width: 960px) {
+    * {
+        font-size: 110%;
+    }
+}
+
+@media only screen and (min-width: 961px) {
+    * {
+        font-size: 120%;
+    }
 }
