@@ -20,6 +20,17 @@
     font-weight: bold;
 }
 
+.account {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.field {
+    margin-bottom: 10px ;
+}
+
 .header {
     background-image: url(asset_path('header.jpg'));
     background-size: cover;

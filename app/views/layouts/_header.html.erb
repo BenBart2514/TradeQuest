@@ -1,19 +1,25 @@
 <div class='header'>
-<h1><%= "#{@page_name}" %></h1>
-</div>
-<nav class='topnav'>
-    <span>
-    <%= link_to "#{@top_link}", @link_path %>
-    </span>
-    <span>
-    <% if user_signed_in? %>
-        <%= "#{current_user.hero.name} | #{current_user.hero.renown} Renown" %>
-        |
-        <%= link_to 'Logout', destroy_user_session_path, method: 'delete' %>
+    <% if @page_name == nil %>
+        <h1>TradeQuest</h1>
     <% else %>
-        <%= link_to 'Login', new_user_session_path %>
-        |
-        <%= link_to 'Sign Up', new_user_registration_path %>
+        <h1><%= "#{@page_name}" %></h1>
     <% end %>
-    </span>
-</nav>
+</div>
+<% unless @top_link == nil %>
+    <nav class='topnav'>
+        <span>
+        <%= link_to "#{@top_link}", @link_path %>
+        </span>
+        <span>
+        <% if user_signed_in? %>
+            <%= "#{current_user.hero.name} | #{current_user.hero.renown} Renown" %>
+            |
+            <%= link_to 'Logout', destroy_user_session_path, method: 'delete' %>
+        <% else %>
+            <%= link_to 'Login', new_user_session_path %>
+            |
+            <%= link_to 'Sign Up', new_user_registration_path %>
+        <% end %>
+        </span>
+    </nav>
+<% end %>
