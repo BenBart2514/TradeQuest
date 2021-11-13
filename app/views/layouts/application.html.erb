@@ -12,9 +12,11 @@
 
   <body>
     <%= render "layouts/header" %>
-    <%= render "layouts/char_stats" %>
+    <div id='messages'>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
+    </div>
+    <%= render "layouts/char_stats" %>
     <%= yield %>
   </body>
 </html>

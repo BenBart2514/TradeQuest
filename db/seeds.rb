@@ -6,10 +6,10 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+User.destroy_all
 Type.destroy_all
 Quality.destroy_all
 Enchant.destroy_all
-Weapon.destroy_all
 Item.destroy_all
 
 ## TYPES ##
@@ -44,8 +44,6 @@ strong = Quality.create(name: 'Strong', modifier: 5)        # 10% (18-19)
 master = Quality.create(name: 'Masterwork', modifier: 10)   # 5%  (20)
 
 ## ENCHANTS ##
-none = Enchant.create(name: 'none', bonus: 0, imbue: 'none')
-
 fire1 = Enchant.create(name: 'Lesser Burning', bonus: 6, imbue: 'fire')         # 9 vs Tundra / 3 vs Desert
 fire2 = Enchant.create(name: 'Burning', bonus: 10, imbue: 'fire')               # 15 vs Tundra / 5 vs Desert
 fire3 = Enchant.create(name: 'Greater Burning', bonus: 16, imbue: 'fire')       # 24 vs Tundra / 8 vs Desert

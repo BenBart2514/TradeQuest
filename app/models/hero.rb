@@ -1,6 +1,7 @@
 class Hero < ApplicationRecord
   belongs_to :user
-  has_one :inventory
+  has_many :weapons, dependent: :destroy
+  has_many :items, dependent: :destroy
 
   validates :name, presence: true
   validates :life, presence: true

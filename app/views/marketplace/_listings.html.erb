@@ -1,0 +1,34 @@
+<div id="listings">
+  <table>
+    <thead>
+      <tr>
+        <th id="name">
+          <span>Name</span>
+        </th>
+        <th id="seller">
+          <span>Seller</span>
+        </th>
+        <th id="price">
+          <span>Price</span>
+        </th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @sale_weapons.each do |weapon| %>
+        <tr>
+          <td><%= weapon.name %></td>
+          <td><%= weapon.hero.name %></td>
+          <td><%= weapon.price %></td>
+        </tr>
+      <% end %>
+      <% @sale_items.each do |item| %>
+        <tr>
+          <td><%= item.name %></td>
+          <td><%= item.hero.name %></td>
+          <td><%= item.price %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_12_045344) do
+ActiveRecord::Schema.define(version: 2021_11_13_072111) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,33 +62,15 @@ ActiveRecord::Schema.define(version: 2021_11_12_045344) do
     t.index ["user_id"], name: "index_heros_on_user_id"
   end
 
-  create_table "inventories", force: :cascade do |t|
-    t.bigint "hero_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["hero_id"], name: "index_inventories_on_hero_id"
-  end
-
   create_table "items", force: :cascade do |t|
+    t.bigint "hero_id"
     t.string "name"
     t.integer "level"
     t.string "element"
-    t.bigint "inventory_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["inventory_id"], name: "index_items_on_inventory_id"
-  end
-
-  create_table "listings", force: :cascade do |t|
-    t.bigint "hero_id", null: false
-    t.bigint "item_id", null: false
-    t.bigint "weapon_id", null: false
     t.integer "price"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["hero_id"], name: "index_listings_on_hero_id"
-    t.index ["item_id"], name: "index_listings_on_item_id"
-    t.index ["weapon_id"], name: "index_listings_on_weapon_id"
+    t.index ["hero_id"], name: "index_items_on_hero_id"
   end
 
   create_table "qualities", force: :cascade do |t|
@@ -119,16 +101,17 @@ ActiveRecord::Schema.define(version: 2021_11_12_045344) do
   end
 
   create_table "weapons", force: :cascade do |t|
+    t.bigint "hero_id"
     t.string "name"
     t.bigint "quality_id", null: false
     t.bigint "type_id", null: false
-    t.bigint "enchant_id", null: false
-    t.integer "uses", default: 0
+    t.bigint "enchant_id"
+    t.integer "uses"
+    t.integer "price"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "inventory_id", null: false
     t.index ["enchant_id"], name: "index_weapons_on_enchant_id"
-    t.index ["inventory_id"], name: "index_weapons_on_inventory_id"
+    t.index ["hero_id"], name: "index_weapons_on_hero_id"
     t.index ["quality_id"], name: "index_weapons_on_quality_id"
     t.index ["type_id"], name: "index_weapons_on_type_id"
   end
@@ -136,13 +119,9 @@ ActiveRecord::Schema.define(version: 2021_11_12_045344) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "heros", "users"
-  add_foreign_key "inventories", "heros"
-  add_foreign_key "items", "inventories"
-  add_foreign_key "listings", "heros"
-  add_foreign_key "listings", "items"
-  add_foreign_key "listings", "weapons"
+  add_foreign_key "items", "heros"
   add_foreign_key "weapons", "enchants"
-  add_foreign_key "weapons", "inventories"
+  add_foreign_key "weapons", "heros"
   add_foreign_key "weapons", "qualities"
   add_foreign_key "weapons", "types"
 end

@@ -1,7 +1,5 @@
 class Item < ApplicationRecord
-  belongs_to :inventory
-
-  has_one_attached :item_image
+  belongs_to :hero, optional: true
 
   validates :name, presence: true
   validates :level, presence: true

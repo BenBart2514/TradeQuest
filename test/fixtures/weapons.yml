@@ -1,15 +1,17 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  hero: one
   name: MyString
-  references: 
-  references: 
-  references: 
+  quality: one
+  type: one
+  enchant: one
   uses: 1
 
 two:
+  hero: two
   name: MyString
-  references: 
-  references: 
-  references: 
+  quality: two
+  type: two
+  enchant: two
   uses: 1
