@@ -62,36 +62,36 @@ earth3 = Enchant.create(name: 'Greater Agony', bonus: 16, imbue: 'earth')       
 
 ## WEAPONS ##
 # Desert #
-pilgrim = Weapon.create(name: "Pilgrim's Staff", quality: fine, type: staff, enchant: ice1, uses: 0)
-kopesh = Weapon.create(name: "Pharaoh's Kopesh", quality: strong, type: sword, enchant: nature2, uses: 0)
-sk_spear = Weapon.create(name: 'Spear of the Scorpion Queen', quality: master, type: pike, enchant: earth3, uses: 0)
+pilgrim = Weapon.create(name: "Pilgrim's Staff", quality: fine, type: staff, enchant: ice1, uses: 0, price: 100)
+kopesh = Weapon.create(name: "Pharaoh's Kopesh", quality: strong, type: sword, enchant: nature2, uses: 0, price: 100)
+sk_spear = Weapon.create(name: 'Spear of the Scorpion Queen', quality: master, type: pike, enchant: earth3, uses: 0, price: 100)
 # Tundra #
-gladius = Weapon.create(name: 'Flame Legion Gladius', quality: fine, type: falchion, enchant: fire1, uses: 0)
-doom_halberd = Weapon.create(name: "Death Knight's Guisarme", quality: strong, type: halberd, enchant: earth2, uses: 0)
-scepter = Weapon.create(name: 'Scepter of Eternal Life', quality: master, type: morningstar, enchant: nature3, uses: 0)
+gladius = Weapon.create(name: 'Flame Legion Gladius', quality: fine, type: falchion, enchant: fire1, uses: 0, price: 100)
+doom_halberd = Weapon.create(name: "Death Knight's Guisarme", quality: strong, type: halberd, enchant: earth2, uses: 0, price: 100)
+scepter = Weapon.create(name: 'Scepter of Eternal Life', quality: master, type: morningstar, enchant: nature3, uses: 0, price: 100)
 # Forest #
-wood_axe = Weapon.create(name: "Woodsman's Axe", quality: fine, type: greataxe, enchant: earth1, uses: 0)
-gg_spear = Weapon.create(name: "Goblin King's Pikestaff", quality: strong, type: spear, enchant: ice2, uses: 0)
-warlord_axe = Weapon.create(name: 'Armageddon Battleaxe', quality: master, type: battleaxe, enchant: fire3, uses: 0)
+wood_axe = Weapon.create(name: "Woodsman's Axe", quality: fine, type: greataxe, enchant: earth1, uses: 0, price: 100)
+gg_spear = Weapon.create(name: "Goblin King's Pikestaff", quality: strong, type: spear, enchant: ice2, uses: 0, price: 100)
+warlord_axe = Weapon.create(name: 'Armageddon Battleaxe', quality: master, type: battleaxe, enchant: fire3, uses: 0, price: 100)
 # Mountain #
-stone_pick = Weapon.create(name: 'Military Pick', quality: fine, type: hatchet, enchant: nature1, uses: 0)
-volcanic = Weapon.create(name: 'Volcanic Cudgel', quality: strong, type: mace, enchant: fire2, uses: 0)
-giant_blade = Weapon.create(name: "Stone Giant's Blade", quality: master, type: twohander, enchant: ice3, uses: 0)
+stone_pick = Weapon.create(name: 'Military Pick', quality: fine, type: hatchet, enchant: nature1, uses: 0, price: 100)
+volcanic = Weapon.create(name: 'Volcanic Cudgel', quality: strong, type: mace, enchant: fire2, uses: 0, price: 100)
+giant_blade = Weapon.create(name: "Stone Giant's Blade", quality: master, type: twohander, enchant: ice3, uses: 0, price: 100)
 
 ## Items ##
 # Desert #
-tea = Item.create(name: "Spicy Tea", level: 1, element: "fire")
-heat_pot = Item.create(name: "Potion of Heat", level: 2, element: "fire")
-immolation = Item.create(name: "Immolation Scroll", level: 3, element: "fire")
+tea = Item.create(name: "Spicy Tea", level: 1, element: "fire", price: 10)
+heat_pot = Item.create(name: "Potion of Heat", level: 2, element: "fire", price: 10)
+immolation = Item.create(name: "Immolation Scroll", level: 3, element: "fire", price: 10)
 # Tundra #
-melon = Item.create(name: "Water Melon", level: 1, element: "ice")
-cold_pot = Item.create(name: "Potion of Cold", level: 2, element: "ice")
-freezing = Item.create(name: "Freezing Scroll", level: 3, element: "ice")
+melon = Item.create(name: "Water Melon", level: 1, element: "ice", price: 10)
+cold_pot = Item.create(name: "Potion of Cold", level: 2, element: "ice", price: 10)
+freezing = Item.create(name: "Freezing Scroll", level: 3, element: "ice", price: 10)
 # Forest #
-beans = Item.create(name: "Magic Beans", level: 1, element: "nature")
-strength_pot = Item.create(name: "Potion of Strength", level: 2, element: "nature")
-growth = Item.create(name: "Growth Scroll", level: 3, element: "nature")
+beans = Item.create(name: "Magic Beans", level: 1, element: "nature", price: 10)
+strength_pot = Item.create(name: "Potion of Strength", level: 2, element: "nature", price: 10)
+growth = Item.create(name: "Growth Scroll", level: 3, element: "nature", price: 10)
 # Mountain #
-fruit = Item.create(name: "Stone Fruit", level: 1, element: "earth")
-stone_pot = Item.create(name: "Potion of Stoneskin", level: 2, element: "earth")
-fissure = Item.create(name: "Fissure Scroll", level: 3, element: "earth")
+fruit = Item.create(name: "Stone Fruit", level: 1, element: "earth", price: 10)
+stone_pot = Item.create(name: "Potion of Stoneskin", level: 2, element: "earth", price: 10)
+fissure = Item.create(name: "Fissure Scroll", level: 3, element: "earth", price: 10)

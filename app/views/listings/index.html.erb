@@ -1,4 +1,15 @@
-<div id="listings">
+<main>
+<%= render "layouts/char_stats" %>
+
+<section id='sell'>
+
+</section>
+
+<section id='buy'>
+
+</section>
+
+<section id="listings">
   <table>
     <thead>
       <tr>
@@ -18,17 +29,18 @@
       <% @sale_weapons.each do |weapon| %>
         <tr>
           <td><%= weapon.name %></td>
-          <td><%= weapon.hero.name %></td>
+          <td><%= weapon.hero.name unless weapon.hero_id.nil? %></td>
           <td><%= weapon.price %></td>
         </tr>
       <% end %>
       <% @sale_items.each do |item| %>
         <tr>
           <td><%= item.name %></td>
-          <td><%= item.hero.name %></td>
+          <td><%= item.hero.name unless item.hero_id.nil? %></td>
           <td><%= item.price %></td>
         </tr>
       <% end %>
     </tbody>
   </table>
-</div>
+</section>
+</main>
