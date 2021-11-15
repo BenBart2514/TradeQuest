@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
   devise_for :users
-  root to: 'listings#index'
+  root to: 'marketplace#index'
   get  '/questing', to: 'quests#index'
   resources :heros
-  resources :listings
+  resources :weapons
+  resources :items
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

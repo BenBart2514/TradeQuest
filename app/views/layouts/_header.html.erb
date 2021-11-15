@@ -1,4 +1,4 @@
-<div class='header'>
+<div id='header'>
     <% if @page_name == nil %>
         <h1>TradeQuest</h1>
     <% else %>
@@ -6,9 +6,9 @@
     <% end %>
 </div>
 <% unless @top_link == nil %>
-    <nav class='topnav'>
-        <p><%= link_to "#{@top_link}", @link_path %></p>
-        <p><%= "#{current_user.hero.name} | #{current_user.hero.renown} Renown" %></p>
-        <p><%= link_to 'Logout', destroy_user_session_path, method: 'delete' %></p>
+    <nav id='topnav'>
+        <span><%= link_to "#{@top_link}", @link_path %></span>
+        <span><%= "#{current_user.hero.name} | #{current_user.hero.renown} Renown" %></span>
+        <span><%= link_to 'Logout', destroy_user_session_path, method: 'delete' %></span>
     </nav>
 <% end %>

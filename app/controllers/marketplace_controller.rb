@@ -1,4 +1,4 @@
-class ListingsController < ApplicationController
+class MarketplaceController < ApplicationController
   before_action :build_listings
 
   def index

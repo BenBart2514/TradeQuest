@@ -1,3 +1,13 @@
 // Place all the styles related to the listings controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+table {
+    justify-content: space-between;
+}
+
+.scrollbar {
+    position: relative;
+    height: 300px;
+    overflow: scroll;
+    }
