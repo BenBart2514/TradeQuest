@@ -6,8 +6,31 @@ table {
     justify-content: space-between;
 }
 
-.scrollbar {
+#inventory_table {
+    margin-bottom: 0px;
+}
+
+#weapons_table {
+    margin-bottom: 0px;
+}
+
+#items_table {
+    margin-bottom: 0px;
+}
+
+.inventory_scrollbar {
+    border: 1px solid grey;
+    position: relative;
+    height: fit-content;
+    max-height: 300px;
+    overflow: scroll;
+    margin-bottom: 1rem;
+}
+
+.shop_scrollbar {
+    border: 1px solid grey;
     position: relative;
     height: 300px;
     overflow: scroll;
-    }
+    margin-bottom: 1rem;
+}

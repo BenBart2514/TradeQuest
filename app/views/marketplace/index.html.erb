@@ -1,46 +1,106 @@
 <main>
 <%= render "layouts/char_stats" %>
 
-<section id='sell'>
+<div class="container">
+  <section id='inventory'>
+    <h3>Inventory</h3>
+    <div class='inventory_scrollbar'>
+      <table id='inventory_table' class="table table-striped table-bordered table-hover table-sm">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Add/Remove</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @hero.weapons.each do |weapon| %>
+            <% if weapon.price == nil %>
+            <tr>
+              <td><%= weapon.name %></td>
+              <td><%= link_to 'Add to Market', sell_weapon_path(weapon.id), :class => "btn" %></td>
+            </tr>
+            <% else %>
+            <tr>
+              <td><%= weapon.name %></td>
+              <td><%= link_to 'Remove from Market', buyback_weapon_path(weapon.id), :class => "btn" %></td>
+            </tr>
+            <% end %>
+          <% end %>
+          <% @hero.items.each do |item| %>
+            <% if item.price == nil %>
+            <tr>
+              <td><%= item.name %></td>
+              <td><%= link_to 'Add to Market', sell_item_path(item.id), :class => "btn" %></td>
+            </tr>
+            <% else %>
+            <tr>
+              <td><%= item.name %></td>
+              <td><%= link_to 'Remove from Market', buyback_item_path(item.id), :class => "btn" %></td>
+            </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </section>
 
-</section>
-
-<section id='buy'>
-
-</section>
-
-<section id="listings">
-  <table>
-    <thead>
-      <tr>
-        <th id="name">
-          <span>Name</span>
-        </th>
-        <th id="seller">
-          <span>Seller</span>
-        </th>
-        <th id="price">
-          <span>Price</span>
-        </th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% @sale_weapons.each do |weapon| %>
-        <tr>
-          <td><%= weapon.name %></td>
-          <td><%= weapon.hero.name unless weapon.hero_id.nil? %></td>
-          <td><%= weapon.price %></td>
-        </tr>
-      <% end %>
-      <% @sale_items.each do |item| %>
-        <tr>
-          <td><%= item.name %></td>
-          <td><%= item.hero.name unless item.hero_id.nil? %></td>
-          <td><%= item.price %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-</section>
+  <section id="listings">
+    <div class="row">
+      <div class="col-sm">
+        <h3>Weapon Shop</h3>
+        <div class='shop_scrollbar'>
+          <table id='weapons_table' class="table table-striped table-bordered table-hover table-sm">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Seller</th>
+                <th scope="col">Price</th>
+                <th scope="col">Buy</tr>
+              </tr>
+            </thead>
+            <tbody>
+              <% @sale_weapons.each do |weapon| %>
+                <tr>
+                  <th scope="row"><%= @sale_weapons.index(weapon) + 1 %></th>
+                  <td><%= weapon.name %></td>
+                  <td><%= weapon.hero.name unless weapon.hero_id.nil? %></td>
+                  <td><%= weapon.price %></td>
+                  <td><%= link_to 'Buy', buy_weapon_path(weapon.id), :class => "btn" %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-sm">
+        <h3>Item Shop</h3>
+        <div class='shop_scrollbar'>
+          <table id='items_table' class="table table-striped table-bordered table-hover table-sm">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Seller</th>
+                <th scope="col">Price</th>
+                <th scope="col">Buy</tr>
+              </tr>
+            </thead>
+            <tbody>
+              <% @sale_items.each do |item| %>
+                <tr>
+                  <th scope="row"><%= @sale_items.index(item) + 1 %></th>
+                  <td><%= item.name %></td>
+                  <td><%= item.hero.name unless item.hero_id.nil? %></td>
+                  <td><%= item.price %></td>
+                  <td><%= link_to 'Buy', buy_item_path(item.id), :class => "btn" %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
 </main>
