@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_13_072111) do
+ActiveRecord::Schema.define(version: 2021_11_16_012633) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,6 +51,17 @@ ActiveRecord::Schema.define(version: 2021_11_13_072111) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "equipment", force: :cascade do |t|
+    t.bigint "hero_id"
+    t.bigint "weapon_id"
+    t.bigint "item_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["hero_id"], name: "index_equipment_on_hero_id"
+    t.index ["item_id"], name: "index_equipment_on_item_id"
+    t.index ["weapon_id"], name: "index_equipment_on_weapon_id"
+  end
+
   create_table "heros", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "name"
@@ -59,6 +70,8 @@ ActiveRecord::Schema.define(version: 2021_11_13_072111) do
     t.integer "renown"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "quest_id", null: false
+    t.index ["quest_id"], name: "index_heros_on_quest_id"
     t.index ["user_id"], name: "index_heros_on_user_id"
   end
 
@@ -76,6 +89,16 @@ ActiveRecord::Schema.define(version: 2021_11_13_072111) do
   create_table "qualities", force: :cascade do |t|
     t.string "name"
     t.integer "modifier"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "quests", force: :cascade do |t|
+    t.string "title"
+    t.string "description"
+    t.string "element"
+    t.string "resistance"
+    t.string "weakness"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -118,6 +141,10 @@ ActiveRecord::Schema.define(version: 2021_11_13_072111) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "equipment", "heros"
+  add_foreign_key "equipment", "items"
+  add_foreign_key "equipment", "weapons"
+  add_foreign_key "heros", "quests"
   add_foreign_key "heros", "users"
   add_foreign_key "items", "heros"
   add_foreign_key "weapons", "enchants"

@@ -6,8 +6,10 @@ class ItemsController < ApplicationController
     if @hero.gold < @item.price
       # display message about user hero not having enough gold
     else
-      # remove gold form buyer
+      # remove gold form buyer and add to seller
       @hero.update(gold: @hero.gold - @item.price)
+      seller = @item.hero
+      seller.update(gold: seller.gold + @item.price)
       # remove item from seller and add item to user's hero and update price to nil to remove from marketplace
       @item.update(hero_id: @hero.id, price: nil)
     end

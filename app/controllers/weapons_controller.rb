@@ -6,8 +6,10 @@ class WeaponsController < ApplicationController
     if @hero.gold < @weapon.price
       # display message about user hero not having enough gold
     else
-      # remove gold form buyer
+      # remove gold form buyer and add to seller
       @hero.update(gold: @hero.gold - @weapon.price)
+      seller = @weapon.hero
+      seller.update(gold: seller.gold + @weapon.price)
       # remove weapon from seller and add weapon to user's hero and update price to nil to remove from marketplace
       @weapon.update(hero_id: @hero.id, price: nil)
     end

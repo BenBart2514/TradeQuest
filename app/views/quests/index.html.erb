@@ -1,3 +1,38 @@
 <main>
 <%= render "layouts/char_stats" %>
+<section>
+    <%= form_with model: @equipment do |f| %>
+        <p>
+            <%= f.label :weapon_id %>
+            <%= f.collection_select :weapon_id, @hero.weapons, :id, :name, {include_blank: 'None'} %>
+        </p>
+        <p>
+            <%= f.label :item_id %>
+            <%= f.collection_select :item_id, @hero.items, :id, :name, {include_blank: 'None'} %>
+        </p>
+        <p>
+            <%= f.submit %>
+        </p>
+    <% end %>
+    <% if @current_weapon == 'None' %>
+    <span>Current Weapon: None</span>
+    <% else %>
+    <span>Current Weapon: <%= @current_weapon.name %></span>
+    <% end %>
+    |
+    <% if @current_item == 'None' %>
+    <span>Current Item: None</span>
+    <% else %>
+    <span>Current Item: <%= @current_item.name %></span>
+    <% end %>
+    <h4>Chance of Success: <%= @success_chance %>%<h4>
+</section>
+<section id='quest_info'>
+    <h2><%= @quest.title %></h2>
+    <p><%= @quest.description %></p>
+    <div id='quest_pic'>
+        <%= link_to 'Go on Quest', quest_result_path, :class => "btn" %> 
+        <%= link_to 'Skip Quest', skip_quest_path, :class => "btn" %>
+    </div>
+</section>
 </main>
