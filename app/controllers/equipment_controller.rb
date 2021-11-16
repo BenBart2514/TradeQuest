@@ -1,4 +1,6 @@
 class EquipmentController < ApplicationController
+  before_action :check_hero_exists
+  
   def update
     permit
     @equipment = Equipment.find(params[:id])

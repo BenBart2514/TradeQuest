@@ -1,4 +1,5 @@
 class QuestsController < ApplicationController
+  before_action :check_hero_exists
   before_action :find_hero
   before_action :find_quest, only: %i[index result]
   before_action :find_equipment, only: %i[index result]
@@ -10,16 +11,31 @@ class QuestsController < ApplicationController
     @page_name = 'Questing'
     @top_link = 'Marketplace'
     @link_path = root_path
+    calc_remaining_uses
   end
 
   def result
+    @marked_for_death = false
     @success = nil
     success_roll
     fate_roll
     gr_change
     reward if @success == true
+    destroy_item unless @current_item == 'None'
+    damage_weapon unless @current_weapon == 'None'
     @hero.update(quest_id: rand(1..4))
-    redirect_to questing_path
+    if @marked_for_death == true
+      @equipment.update(weapon_id: nil, item_id: nil)
+      @equipment.destroy
+      @hero.destroy
+      redirect_to questing_path, notice: 'You died... but the gods offer you another chance to live a new life.'
+    elsif @success == true
+      redirect_to questing_path, notice: 'Quest Successful! -'
+      flash[:alert] = "- #{@reward.name} was added to your inventory.You've also earned #{@result} Gold and Renown."
+    else
+      redirect_to questing_path, notice: 'Quest Failed! -'
+      flash[:alert] = "- #{@hero.name} lost 50 Gold 1 Life point."
+    end
   end
 
   def skip
@@ -27,7 +43,16 @@ class QuestsController < ApplicationController
       # display error
     else
       @hero.update(gold: @hero.gold - 25, quest_id: rand(1..4))
-      @hero.update(life: @hero.life + 1) unless @hero.life == 5
+      if @hero.life == 5
+        flash[:alert] = "You feel well-rested, #{@hero.name} lost 25 Gold."
+      else
+        @hero.update(life: @hero.life + 1)
+        flash[:alert] = if @hero.life == 5
+                          "Your wounds have completely healed, #{@hero.name} lost 25 Gold and gained 1 Life point."
+                        else
+                          "Your wounds are healing... #{@hero.name} lost 25 Gold and gained 1 Life point."
+                        end
+      end
     end
     redirect_to questing_path
   end
@@ -81,25 +106,27 @@ class QuestsController < ApplicationController
     end
     unless @current_item == 'None'
       if @current_item.level == 1 && @current_item.element == @quest.weakness
-        @item_rating = 10
+        @item_rating = 20
       elsif @current_item.level == 2
         @item_rating = if @current_item.element == @quest.weakness
-                         20
+                         30
                        elsif @current_item.element == @quest.element
                          5
-                       else
+                       elsif @current_item.element == @quest.resistance
                          10
+                       else
+                         20
                        end
       elsif @current_item.level == 3
         @item_rating = if @current_item.element == @quest.weakness
-                         45
+                         60
                        elsif @current_item.element == @quest.element || @current_item.element == @quest.resistance
                          15
                        else
                          30
                        end
       else
-        @item_rating = 2
+        @item_rating = 5
       end
     end
     @true_success_chance = @weapon_rating + @item_rating
@@ -113,7 +140,7 @@ class QuestsController < ApplicationController
   end
 
   def success_roll
-    @roll = rand(1.100)
+    @roll = rand(1..100)
     @result = @roll + @true_success_chance
     @success = true if @result >= 100
   end
@@ -133,54 +160,72 @@ class QuestsController < ApplicationController
       @hero.gold += @result
       @hero.renown += @result
     elsif @hero.gold < 50
-      @hero.destroy
-      redirect_to root_path
+      @marked_for_death = true
     else
       @hero.update(gold: @hero.gold - 50, life: @hero.life - 1)
-      if @hero.life.zero?
-        @hero.destroy
-        redirect_to root_path
-      end
+      @marked_for_death = true if @hero.life.zero?
     end
+  end
+
+  def destroy_item
+    @equipment.update(item_id: nil)
+    @current_item.destroy
+  end
+
+  def calc_remaining_uses
+    @remaining_uses = 'N/A'
+    return if @current_weapon == 'None'
+
+    total_durability = @current_weapon.type.durability + @current_weapon.quality.modifier
+    @remaining_uses = total_durability - @current_weapon.uses
+  end
+
+  def damage_weapon
+    @current_weapon.update(uses: @current_weapon.uses + 1)
+    calc_remaining_uses
+    return unless @remaining_uses < 1
+
+    @equipment.update(weapon_id: nil)
+    @current_weapon.destroy
   end
 
   def reward
     loot_drop = rand(1..10)
     if loot_drop < 5
-      new_item = Item.create(hero_id: @hero.id, level: 1, element: @quest.element.id)
-      case @quest.element.name
+      @reward = Item.create(hero_id: @hero.id, level: 1, element: @quest.element)
+      case @quest.element
       when 'fire'
-        new_item.update(name: 'Spicy Tea')
+        @reward.update(name: 'Spicy Tea')
       when 'ice'
-        new_item.update(name: 'Water Melon')
+        @reward.update(name: 'Water Melon')
       when 'nature'
-        new_item.update(name: 'Magic Beans')
+        @reward.update(name: 'Magic Beans')
       when 'earth'
-        new_item.update(name: 'Stone Fruit')
+        @reward.update(name: 'Stone Fruit')
       end
     elsif loot_drop < 8
-      new_item = Item.create(hero_id: @hero.id, level: 2, element: @quest.element.id)
-      case @quest.element.name
+      @reward = Item.create(hero_id: @hero.id, level: 2, element: @quest.element)
+      case @quest.element
       when 'fire'
-        new_item.update(name: 'Potion of Heat')
+        @reward.update(name: 'Potion of Heat')
       when 'ice'
-        new_item.update(name: 'Potion of Cold')
+        @reward.update(name: 'Potion of Cold')
       when 'nature'
-        new_item.update(name: 'Potion of Strength')
+        @reward.update(name: 'Potion of Strength')
       when 'earth'
-        new_item.update(name: 'Potion of Stoneskin')
+        @reward.update(name: 'Potion of Stoneskin')
       end
     elsif loot_drop < 10
-      new_item = Item.create(hero_id: @hero.id, level: 3, element: @quest.element.id)
-      case @quest.element.name
+      @reward = Item.create(hero_id: @hero.id, level: 3, element: @quest.element)
+      case @quest.element
       when 'fire'
-        new_item.update(name: 'Immolation Scroll')
+        @reward.update(name: 'Immolation Scroll')
       when 'ice'
-        new_item.update(name: 'Freezing Scroll')
+        @reward.update(name: 'Freezing Scroll')
       when 'nature'
-        new_item.update(name: 'Growth Scroll')
+        @reward.update(name: 'Growth Scroll')
       when 'earth'
-        new_item.update(name: 'Fissure Scroll')
+        @reward.update(name: 'Fissure Scroll')
       end
     else
       weapon_drop
@@ -220,11 +265,11 @@ class QuestsController < ApplicationController
               else
                 Enchant.find_by(bonus: 16, imbue: @quest.element)
               end
-    new_weapon = Weapon.create(hero_id: @hero.id, type_id: type, quality_id: quality, enchant_id: enchant, uses: 0)
-    if new_weapon.enchant.nil?
-      new_weapon.update(name: "#{new_weapon.quality.name} #{new_weapon.type.name}")
+    @reward = Weapon.create(hero_id: @hero.id, type_id: type, quality_id: quality, enchant_id: enchant, uses: 0)
+    if @reward.enchant.nil?
+      @reward.update(name: "#{@reward.quality.name} #{@reward.type.name}")
     else
-      new_weapon.update(name: "#{new_weapon.quality.name} #{new_weapon.type.name} of #{new_weapon.enchant.name}")
+      @reward.update(name: "#{@reward.quality.name} #{@reward.type.name} of #{@reward.enchant.name}")
     end
   end
 end

@@ -17,13 +17,15 @@
     <% if @current_weapon == 'None' %>
     <span>Current Weapon: None</span>
     <% else %>
-    <span>Current Weapon: <%= @current_weapon.name %></span>
+    <span>Current Weapon: <%= @current_weapon.name %> - </span>
+    <span>Remaining uses: <%= @remaining_uses %>
     <% end %>
     |
     <% if @current_item == 'None' %>
     <span>Current Item: None</span>
     <% else %>
-    <span>Current Item: <%= @current_item.name %></span>
+    <span>Current Item: <%= @current_item.name %> - </span>
+    <span>This item will be destroyed after the quest.</span>
     <% end %>
     <h4>Chance of Success: <%= @success_chance %>%<h4>
 </section>
@@ -31,8 +33,8 @@
     <h2><%= @quest.title %></h2>
     <p><%= @quest.description %></p>
     <div id='quest_pic'>
-        <%= link_to 'Go on Quest', quest_result_path, :class => "btn" %> 
-        <%= link_to 'Skip Quest', skip_quest_path, :class => "btn" %>
+        <%= link_to 'Go on Quest', quest_result_path, :class => "btn-primary btn-lg" %> 
+        <%= link_to 'Skip Quest', skip_quest_path, :class => "btn-secondary btn-lg" %>
     </div>
 </section>
 </main>

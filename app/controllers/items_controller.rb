@@ -1,4 +1,5 @@
 class ItemsController < ApplicationController
+  before_action :check_hero_exists
   before_action :find_item
   before_action :find_hero
 
@@ -8,8 +9,10 @@ class ItemsController < ApplicationController
     else
       # remove gold form buyer and add to seller
       @hero.update(gold: @hero.gold - @item.price)
-      seller = @item.hero
-      seller.update(gold: seller.gold + @item.price)
+      unless @item.hero.nil?
+        seller = @item.hero
+        seller.update(gold: seller.gold + @item.price)
+      end
       # remove item from seller and add item to user's hero and update price to nil to remove from marketplace
       @item.update(hero_id: @hero.id, price: nil)
     end

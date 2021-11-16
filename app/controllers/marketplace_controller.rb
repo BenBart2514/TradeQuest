@@ -1,12 +1,9 @@
 class MarketplaceController < ApplicationController
+  before_action :check_hero_exists
 
   def index
-    if current_user.hero.nil?
-      redirect_to new_hero_path
-    else
-      find_hero
-      build_listings
-    end
+    find_hero
+    build_listings
     @page_name = 'Marketplace'
     @top_link = 'Questing'
     @link_path = questing_path
