@@ -371,7 +371,8 @@ class QuestsController < ApplicationController
               else
                 Enchant.find_by(bonus: 16, imbue: @quest.element)
               end
-    @reward = Weapon.create(hero_id: @hero.id, type_id: type, quality_id: quality, enchant_id: enchant, uses: 0)
+    @reward = Weapon.create(hero_id: @hero.id, type: Type.find(type), quality: Quality.find(quality),
+                            enchant: Enchant.find(enchant), uses: 0)
     if @reward.enchant.nil?
       @reward.update(name: "#{@reward.quality.name} #{@reward.type.name}")
     else

@@ -19,7 +19,7 @@ class HerosController < ApplicationController
     begin
       @hero.save!
       Equipment.create(hero_id: @hero.id)
-      Weapon.create(hero_id: @hero.id, name: 'Old Sword', quality: 1, type: 5, uses: 0)
+      Weapon.create(hero_id: @hero.id, name: 'Old Sword', quality: Quality.find(1), type: Type.find(5), uses: 0)
       first.image.attach(io: File.open('app/assets/images/Sword.png'),
                          filename: 'Sword.png', content_type: 'image/png')
       redirect_to root_path
