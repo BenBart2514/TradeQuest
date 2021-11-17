@@ -30,7 +30,8 @@ table {
 .shop_scrollbar {
     border: 1px solid grey;
     position: relative;
-    height: 300px;
+    height: fit-content;
+    max-height: 600px;
     overflow: scroll;
     margin-bottom: 1rem;
 }

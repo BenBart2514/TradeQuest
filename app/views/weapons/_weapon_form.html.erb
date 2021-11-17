@@ -1,0 +1,25 @@
+<%= form_with model: @weapon do |f| %>
+    <p>
+        <%= f.label :name %>
+        <%= f.text_field :name %>
+    </p>
+    <p>
+        <%= f.label :image %>
+        <%= f.file_field :image %>
+    </p>
+    <p>
+        <%= f.label :quality_id %>
+        <%= f.collection_select :quality_id, @qualities, :id, :name %>
+    </p>
+    <p>
+        <%= f.label :type_id %>
+        <%= f.collection_select :type_id, @types, :id, :name %>
+    </p>
+    <p>
+        <%= f.label :enchant_id %>
+        <%= f.collection_select :enchant_id, @enchants, :id, :name %>
+    </p>
+    <p>
+        <%= f.submit %>
+    </p>
+<% end %>

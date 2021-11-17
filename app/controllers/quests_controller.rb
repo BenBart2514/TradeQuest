@@ -1,4 +1,5 @@
 class QuestsController < ApplicationController
+  before_action :check_authorization
   before_action :check_hero_exists
   before_action :find_hero
   before_action :find_quest, only: %i[index result]
@@ -17,9 +18,11 @@ class QuestsController < ApplicationController
   def result
     @marked_for_death = false
     @success = nil
+    @bonus = nil
     success_roll
     fate_roll
     gr_change
+    bonus if @bonus == true
     reward if @success == true
     destroy_item unless @current_item == 'None'
     damage_weapon unless @current_weapon == 'None'
@@ -30,11 +33,15 @@ class QuestsController < ApplicationController
       @hero.destroy
       redirect_to questing_path, notice: 'You died... but the gods offer you another chance to live a new life.'
     elsif @success == true
-      redirect_to questing_path, notice: 'Quest Successful! -'
-      flash[:alert] = "- #{@reward.name} was added to your inventory.You've also earned #{@result} Gold and Renown."
+      redirect_to questing_path, notice: "Quest Successful! You've earned #{@result} Gold and Renown."
+      if @bonus == true
+        flash[:alert] =
+          "#{@reward.name} was added to your inventory. You also claimed a #{@bonus_loot.name} on the journey!"
+      else
+        flash[:alert] = "- #{@reward.name} was added to your inventory."
+      end
     else
-      redirect_to questing_path, notice: 'Quest Failed! -'
-      flash[:alert] = "- #{@hero.name} lost 50 Gold 1 Life point."
+      redirect_to questing_path, notice: "Quest Failed! #{@hero.name} lost 50 Gold 1 Life point."
     end
   end
 
@@ -58,6 +65,10 @@ class QuestsController < ApplicationController
   end
 
   private
+
+  def check_authorization
+    authorize Quest
+  end
 
   def find_hero
     @hero = current_user.hero
@@ -91,7 +102,7 @@ class QuestsController < ApplicationController
     @weapon_rating = 0
     @item_rating = 0
     unless @current_weapon == 'None'
-      @base_bonus = @current_weapon.type.damage + @current_weapon.quality.modifier
+      @base_bonus = @current_weapon.type.damage + (@current_weapon.quality.modifier * 2)
       @enchant_bonus = if @current_weapon.enchant.nil?
                          0
                        elsif @current_weapon.enchant.imbue == @quest.element || @quest.resistance
@@ -143,6 +154,7 @@ class QuestsController < ApplicationController
     @roll = rand(1..100)
     @result = @roll + @true_success_chance
     @success = true if @result >= 100
+    @bonus = true if @result > 150
   end
 
   def fate_roll
@@ -164,6 +176,76 @@ class QuestsController < ApplicationController
     else
       @hero.update(gold: @hero.gold - 50, life: @hero.life - 1)
       @marked_for_death = true if @hero.life.zero?
+    end
+  end
+
+  def bonus
+    if @result < 200
+      if @quest.element == 'fire'
+        @bonus_loot = Weapon.create!(hero_id: @hero.id, name: "Pilgrim's Staff", quality_id: 4, type_id: 1,
+                                     enchant_id: 4, uses: 0)
+        @bonus_loot.image.attach(io: File.open('app/assets/images/Pilgrim.png'),
+                                 filename: 'Pilgrim.png', content_type: 'image/png')
+      elsif @quest.element == 'ice'
+        @bonus_loot = Weapon.create!(hero_id: @hero.id, name: 'Flame Legion Gladius', quality_id: 4, type_id: 3,
+                                     enchant_id: 1, uses: 0)
+        @bonus_loot.image.attach(io: File.open('app/assets/images/Gladius.png'),
+                                 filename: 'Gladius.png', content_type: 'image/png')
+      elsif @quest.element == 'nature'
+        @bonus_loot = Weapon.create!(hero_id: @hero.id, name: "Woodsman's Axe", quality_id: 4, type_id: 4,
+                                     enchant_id: 10, uses: 0)
+        @bonus_loot.image.attach(io: File.open('app/assets/images/Woodaxe.png'),
+                                 filename: 'Woodaxe.png', content_type: 'image/png')
+      else
+        @bonus_loot = Weapon.create!(hero_id: @hero.id, name: 'Military Pick', quality_id: 4, type_id: 2,
+                                     enchant_id: 7, uses: 0)
+        @bonus_loot.image.attach(io: File.open('app/assets/images/Pick.png'),
+                                 filename: 'Pick.png', content_type: 'image/png')
+      end
+    elsif @result < 250
+      if @quest.element == 'fire'
+        @bonus_loot = Weapon.create!(hero_id: @hero.id, name: "Pharaoh's Kopesh", quality_id: 5, type_id: 5,
+                                     enchant_id: 8, uses: 0)
+        @bonus_loot.image.attach(io: File.open('app/assets/images/Kopesh.png'),
+                                 filename: 'Kopesh.png', content_type: 'image/png')
+      elsif @quest.element == 'ice'
+        @bonus_loot = Weapon.create!(hero_id: @hero.id, name: "Death Knight's Glaive", quality_id: 5, type_id: 8,
+                                     enchant_id: 11, uses: 0)
+        @bonus_loot.image.attach(io: File.open('app/assets/images/Glaive.png'),
+                                 filename: 'Glaive.png', content_type: 'image/png')
+      elsif @quest.element == 'nature'
+        @bonus_loot = Weapon.create!(hero_id: @hero.id, name: "Goblin King's Pikestaff", quality_id: 5, type_id: 6,
+                                     enchant_id: 5, uses: 0)
+        @bonus_loot.image.attach(io: File.open('app/assets/images/Goblin.png'),
+                                 filename: 'Goblin.png', content_type: 'image/png')
+      else
+        @bonus_loot = Weapon.create!(hero_id: @hero.id, name: 'Volcanic Cudgel', quality_id: 5, type_id: 7,
+                                     enchant_id: 2, uses: 0)
+        @bonus_loot.image.attach(io: File.open('app/assets/images/Cudgel.png'),
+                                 filename: 'Cudgel.png', content_type: 'image/png')
+      end
+    elsif @result > 250
+      if @quest.element == 'fire'
+        @bonus_loot = Weapon.create!(hero_id: @hero.id, name: 'Spear of the Scorpion Queen', quality_id: 6,
+                                     type_id: 14, enchant_id: 12, uses: 0)
+        @bonus_loot.image.attach(io: File.open('app/assets/images/Scorpion.png'),
+                                 filename: 'Scorpion.png', content_type: 'image/png')
+      elsif @quest.element == 'ice'
+        @bonus_loot = Weapon.create!(hero_id: @hero.id, name: 'Scepter of Eternal Life', quality_id: 6,
+                                     type_id: 15, enchant_id: 9, uses: 0)
+        @bonus_loot.image.attach(io: File.open('app/assets/images/Scepter.png'),
+                                 filename: 'Scepter.png', content_type: 'image/png')
+      elsif @quest.element == 'nature'
+        @bonus_loot = Weapon.create!(hero_id: @hero.id, name: 'Meteoric Battleaxe', quality_id: 6, type_id: 16,
+                                     enchant_id: 3, uses: 0)
+        @bonus_loot.image.attach(io: File.open('app/assets/images/Meteoric.png'),
+                                 filename: 'Meteoric.png', content_type: 'image/png')
+      else
+        @bonus_loot = Weapon.create!(hero_id: @hero.id, name: "Stone Giant's Blade", quality_id: 6, type_id: 13,
+                                     enchant_id: 6, uses: 0)
+        @bonus_loot.image.attach(io: File.open('app/assets/images/Giant.png'),
+                                 filename: 'Giant.png', content_type: 'image/png')
+      end
     end
   end
 
@@ -196,36 +278,60 @@ class QuestsController < ApplicationController
       case @quest.element
       when 'fire'
         @reward.update(name: 'Spicy Tea')
+        @reward.image.attach(io: File.open('app/assets/images/Tea.png'),
+                             filename: 'Tea.png', content_type: 'image/png')
       when 'ice'
         @reward.update(name: 'Water Melon')
+        @reward.image.attach(io: File.open('app/assets/images/Melon.png'),
+                             filename: 'Melon.png', content_type: 'image/png')
       when 'nature'
         @reward.update(name: 'Magic Beans')
+        @reward.image.attach(io: File.open('app/assets/images/Beans.png'),
+                             filename: 'Beans.png', content_type: 'image/png')
       when 'earth'
         @reward.update(name: 'Stone Fruit')
+        @reward.image.attach(io: File.open('app/assets/images/Fruit.png'),
+                             filename: 'Fruit.png', content_type: 'image/png')
       end
     elsif loot_drop < 8
       @reward = Item.create(hero_id: @hero.id, level: 2, element: @quest.element)
       case @quest.element
       when 'fire'
         @reward.update(name: 'Potion of Heat')
+        @reward.image.attach(io: File.open('app/assets/images/Heat.png'),
+                             filename: 'Heat.png', content_type: 'image/png')
       when 'ice'
         @reward.update(name: 'Potion of Cold')
+        @reward.image.attach(io: File.open('app/assets/images/Cold.png'),
+                             filename: 'Cold.png', content_type: 'image/png')
       when 'nature'
         @reward.update(name: 'Potion of Strength')
+        @reward.image.attach(io: File.open('app/assets/images/Strength.png'),
+                             filename: 'Strength.png', content_type: 'image/png')
       when 'earth'
         @reward.update(name: 'Potion of Stoneskin')
+        @reward.image.attach(io: File.open('app/assets/images/Stone.png'),
+                             filename: 'Stone.png', content_type: 'image/png')
       end
     elsif loot_drop < 10
       @reward = Item.create(hero_id: @hero.id, level: 3, element: @quest.element)
       case @quest.element
       when 'fire'
         @reward.update(name: 'Immolation Scroll')
+        @reward.image.attach(io: File.open('app/assets/images/Immolation.png'),
+                             filename: 'Immolation.png', content_type: 'image/png')
       when 'ice'
         @reward.update(name: 'Freezing Scroll')
+        @reward.image.attach(io: File.open('app/assets/images/Freezing.png'),
+                             filename: 'Freezing.png', content_type: 'image/png')
       when 'nature'
         @reward.update(name: 'Growth Scroll')
+        @reward.image.attach(io: File.open('app/assets/images/Growth.png'),
+                             filename: 'Growth.png', content_type: 'image/png')
       when 'earth'
         @reward.update(name: 'Fissure Scroll')
+        @reward.image.attach(io: File.open('app/assets/images/Fissure.png'),
+                             filename: 'Fissure.png', content_type: 'image/png')
       end
     else
       weapon_drop
@@ -271,5 +377,7 @@ class QuestsController < ApplicationController
     else
       @reward.update(name: "#{@reward.quality.name} #{@reward.type.name} of #{@reward.enchant.name}")
     end
+    @reward.image.attach(io: File.open("app/assets/images/#{@reward.type.name}.png"),
+                         filename: "#{@reward.type.name}.png", content_type: 'image/png')
   end
 end

@@ -1,0 +1,31 @@
+<main>
+<div class="container">
+  <div class="row">
+    <h1><%= @item.name %></h1>
+  </div>
+  <div class="row">
+    <div class="col-sm">
+        <p>Level: <%= @item.level %></p>
+        <p>Element: <%= @item.element.capitalize %></p>
+    </div>
+    <div class="col-sm">
+        <% if @item.image.attached? %>
+            <%= cl_image_tag @item.image.key, crop: :scale, height: 150, cloud_name: 'bbart121' %>
+        <% end %>
+    </div>
+  </div>
+  <div class="row">
+    <p>
+        <%= link_to "<< Back", root_path %>
+        <% if policy(@item).update? %>
+            |
+            <%= link_to "Edit", edit_item_path(@item) %>
+        <% end %>
+        <% if policy(@item).destroy? %>
+            |
+            <%= link_to "Destroy", @item, method: :delete, data: { confirm: "Are you sure?" } %>
+        <% end %>
+    </p>
+  </div>
+</div>
+</main>

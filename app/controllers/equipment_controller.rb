@@ -1,4 +1,5 @@
 class EquipmentController < ApplicationController
+  before_action :check_authorization
   before_action :check_hero_exists
   
   def update
@@ -20,6 +21,10 @@ class EquipmentController < ApplicationController
   end
 
   private
+
+  def check_authorization
+    authorize Equipment
+  end
 
   def permit
     params.require(:equipment).permit!

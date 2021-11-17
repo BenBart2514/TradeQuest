@@ -1,0 +1,21 @@
+<%= form_with model: @item do |f| %>
+    <p>
+        <%= f.label :name %>
+        <%= f.text_field :name %>
+    </p>
+    <p>
+        <%= f.label :image %>
+        <%= f.file_field :image %>
+    </p>
+    <p>
+        <%= f.label :level %>
+        <%= f.text_field :level %>
+    </p>
+    <p>
+        <%= f.label :element %>
+        <%= f.text_field :element %>
+    </p>
+    <p>
+        <%= f.submit %>
+    </p>
+<% end %>

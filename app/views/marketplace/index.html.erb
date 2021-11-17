@@ -16,12 +16,12 @@
           <% @hero.weapons.each do |weapon| %>
             <% if weapon.price == nil %>
             <tr>
-              <td><%= weapon.name %></td>
+              <td><%= link_to weapon.name, weapon_path(weapon.id) %></td>
               <td><%= link_to 'Add to Market', sell_weapon_path(weapon.id), :class => "btn" %></td>
             </tr>
             <% else %>
             <tr>
-              <td><%= weapon.name %></td>
+              <td><%= link_to weapon.name, weapon_path(weapon.id) %></td>
               <td><%= link_to 'Remove from Market', buyback_weapon_path(weapon.id), :class => "btn" %></td>
             </tr>
             <% end %>
@@ -29,12 +29,12 @@
           <% @hero.items.each do |item| %>
             <% if item.price == nil %>
             <tr>
-              <td><%= item.name %></td>
+              <td><%= link_to item.name, item_path(item.id) %></td>
               <td><%= link_to 'Add to Market', sell_item_path(item.id), :class => "btn" %></td>
             </tr>
             <% else %>
             <tr>
-              <td><%= item.name %></td>
+              <td><%= link_to item.name, item_path(item.id) %></td>
               <td><%= link_to 'Remove from Market', buyback_item_path(item.id), :class => "btn" %></td>
             </tr>
             <% end %>
@@ -63,7 +63,7 @@
               <% @sale_weapons.each do |weapon| %>
                 <tr>
                   <th scope="row"><%= @sale_weapons.index(weapon) + 1 %></th>
-                  <td><%= weapon.name %></td>
+                  <td><%= link_to weapon.name, weapon_path(weapon.id) %></td>
                   <td><%= weapon.hero.name unless weapon.hero_id.nil? %></td>
                   <td><%= weapon.price %></td>
                   <td><%= link_to 'Buy', buy_weapon_path(weapon.id), :class => "btn" %></td>
@@ -90,7 +90,7 @@
               <% @sale_items.each do |item| %>
                 <tr>
                   <th scope="row"><%= @sale_items.index(item) + 1 %></th>
-                  <td><%= item.name %></td>
+                  <td><%= link_to item.name, item_path(item.id) %></td>
                   <td><%= item.hero.name unless item.hero_id.nil? %></td>
                   <td><%= item.price %></td>
                   <td><%= link_to 'Buy', buy_item_path(item.id), :class => "btn" %></td>

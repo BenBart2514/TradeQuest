@@ -1,4 +1,5 @@
 class ItemsController < ApplicationController
+  before_action :check_authorization
   before_action :check_hero_exists
   before_action :find_item
   before_action :find_hero
@@ -32,6 +33,10 @@ class ItemsController < ApplicationController
   end
 
   private
+
+  def check_authorization
+    authorize Item
+  end
 
   def item_params
     params.require(:item).permit(:price)

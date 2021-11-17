@@ -1,4 +1,5 @@
 class WeaponsController < ApplicationController
+  before_action :check_authorization
   before_action :check_hero_exists
   before_action :find_weapon
   before_action :find_hero
@@ -27,11 +28,15 @@ class WeaponsController < ApplicationController
   end
 
   def buyback
-    @item.update(price: nil)
+    @weapon.update(price: nil)
     redirect_to root_path
   end
 
   private
+
+  def check_authorization
+    authorize Weapon
+  end
 
   def weapon_params
     params.require(:weapon).permit(:price)

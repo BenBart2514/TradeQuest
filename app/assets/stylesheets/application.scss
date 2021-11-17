@@ -21,15 +21,16 @@
 }
 
 main {
-  margin-left: 2%;
-  margin-right: 2%;
+  margin-top: 10px;
+  margin-left: 5%;
+  margin-right: 5%;
 }
 
 #header {
     background-image: url(asset_path('header.jpg'));
     background-size: cover;
     background-position: 0%;
-    height: 100px;
+    height: 200px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -54,7 +55,10 @@ main {
 
 #messages {
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center
+    ;
 }
 
 .account {
@@ -80,8 +84,14 @@ main {
     justify-content: center;
 }
 
-@media only screen and (min-width: 961px) {
+@media only screen and (max-width: 360px) {
     * {
-        font-size: 105%;
+        font-size: .8rem;
+    }
+}
+
+@media only screen and (min-width: 960px) {
+    * {
+        font-size: 1.2rem;
     }
 }
