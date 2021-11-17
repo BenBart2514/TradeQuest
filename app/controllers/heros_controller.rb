@@ -15,13 +15,13 @@ class HerosController < ApplicationController
 
   def create
     @hero = Hero.new(hero_params)
-    @hero.update(user_id: current_user.id, life: 5, gold: 200, renown: 0, quest_id: rand(1..4))
+    @hero.update(user_id: current_user.id, life: 5, gold: 500, renown: 0, quest_id: rand(1..4))
     begin
       @hero.save!
       Equipment.create(hero_id: @hero.id)
-      first = Weapon.create(hero_id: @hero.id, name: 'Old Sword', quality_id: 1, type_id: 5, uses: 0)
-      first.image.attach(io: File.open('app/assets/images/Sword.png'),
-                         filename: 'Sword.png', content_type: 'image/png')
+      Weapon.create(hero_id: @hero.id, name: 'Old Sword', quality_id: 1, type_id: 5, uses: 0)
+      # first.image.attach(io: File.open('app/assets/images/Sword.png'),
+      #                    filename: 'Sword.png', content_type: 'image/png')
       redirect_to root_path
     rescue StandardError
       flash[:alert] = @hero.errors.full_messages.flatten.join(', ')
