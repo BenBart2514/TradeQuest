@@ -17,7 +17,7 @@ class HeroPolicy
   end
 
   def create?
-    user.hero.nil?
+    true
   end
 
   def new?

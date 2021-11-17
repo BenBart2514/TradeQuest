@@ -19,9 +19,9 @@ class HerosController < ApplicationController
     begin
       @hero.save!
       Equipment.create(hero_id: @hero.id)
-      Weapon.create(hero_id: @hero.id, name: 'Old Sword', quality_id: 1, type_id: 5, uses: 0)
-      # first.image.attach(io: File.open('app/assets/images/Sword.png'),
-      #                    filename: 'Sword.png', content_type: 'image/png')
+      Weapon.create(hero_id: @hero.id, name: 'Old Sword', quality: 1, type: 5, uses: 0)
+      first.image.attach(io: File.open('app/assets/images/Sword.png'),
+                         filename: 'Sword.png', content_type: 'image/png')
       redirect_to root_path
     rescue StandardError
       flash[:alert] = @hero.errors.full_messages.flatten.join(', ')
