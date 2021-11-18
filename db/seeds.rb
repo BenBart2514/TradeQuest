@@ -107,76 +107,109 @@ pick = Weapon.create!(name: 'Military Pick', quality: fine, type: hatchet, encha
 pick.image.attach(io: File.open('app/assets/images/Pick.png'),
                   filename: 'Pick.png', content_type: 'image/png')
 
-## Unique Weapon References ##
-# # Desert #
-# Weapon.create!(name: "Pilgrim's Staff", quality: fine, type: staff, enchant: ice1, uses: 0, price: 253)
-# Weapon.create!(name: "Pharaoh's Kopesh", quality: strong, type: sword, enchant: nature2, uses: 0, price: 565)
-# Weapon.create!(name: 'Spear of the Scorpion Queen', quality: master, type: pike, enchant: earth3, uses: 0)
-# # Tundra #
-# Weapon.create!(name: 'Flame Legion Gladius', quality: fine, type: falchion, enchant: fire1, uses: 0, price: 277)
-# Weapon.create!(name: "Death Knight's Glaive", quality: strong, type: halberd, enchant: earth2, uses: 0, price: 1159)
-# Weapon.create!(name: 'Scepter of Eternal Life', quality: master, type: morningstar, enchant: nature3, uses: 0)
-# # Forest #
-# Weapon.create!(name: "Woodsman's Axe", quality: fine, type: greataxe, enchant: earth1, uses: 0, price: 292)
-# Weapon.create!(name: "Goblin King's Pikestaff", quality: strong, type: spear, enchant: ice2, uses: 0, price: 805)
-# Weapon.create!(name: 'Meteoric Battleaxe', quality: master, type: battleaxe, enchant: fire3, uses: 0)
-# # Mountain #
-# Weapon.create!(name: 'Military Pick', quality: fine, type: hatchet, enchant: nature1, uses: 0, price: 316)
-# Weapon.create!(name: 'Volcanic Cudgel', quality: strong, type: mace, enchant: fire2, uses: 0, price: 864)
-# Weapon.create!(name: "Stone Giant's Blade", quality: master, type: twohander, enchant: ice3, uses: 0)
+# Desert #
+Weapon.create!(name: "Pilgrim's Staff", quality: fine, type: staff, enchant: ice1, uses: 0, price: 253)
+Weapon.create!(name: "Pharaoh's Kopesh", quality: strong, type: sword, enchant: nature2, uses: 0, price: 565)
+Weapon.create!(name: 'Spear of the Scorpion Queen', quality: master, type: pike, enchant: earth3, uses: 0, price: 1632)
+# Tundra #
+Weapon.create!(name: 'Flame Legion Gladius', quality: fine, type: falchion, enchant: fire1, uses: 0, price: 277)
+Weapon.create!(name: "Death Knight's Glaive", quality: strong, type: halberd, enchant: earth2, uses: 0, price: 1159)
+Weapon.create!(name: 'Scepter of Eternal Life', quality: master, type: morningstar, enchant: nature3, uses: 0,
+               price: 2864)
+# Forest #
+Weapon.create!(name: "Woodsman's Axe", quality: fine, type: greataxe, enchant: earth1, uses: 0, price: 292)
+Weapon.create!(name: "Goblin King's Pikestaff", quality: strong, type: spear, enchant: ice2, uses: 0, price: 805)
+Weapon.create!(name: 'Meteoric Battleaxe', quality: master, type: battleaxe, enchant: fire3, uses: 0, price: 2696)
+# Mountain #
+Weapon.create!(name: 'Military Pick', quality: fine, type: hatchet, enchant: nature1, uses: 0, price: 316)
+Weapon.create!(name: 'Volcanic Cudgel', quality: strong, type: mace, enchant: fire2, uses: 0, price: 864)
+Weapon.create!(name: "Stone Giant's Blade", quality: master, type: twohander, enchant: ice3, uses: 0, price: 2248)
+
+10.times do
+  x = Weapon.create!(quality: Quality.find(rand(1..6)), type: Type.find(rand(1..18)),
+                     enchant: Enchant.find(rand(1..12)), uses: 0)
+  x.update(name: "#{x.quality.name} #{x.type.name} of #{x.enchant.name}")
+  x.update(price: (x.type.damage * x.type.durability) + (x.enchant.bonus * 10) + (x.quality.modifier * 50))
+  x.image.attach(io: File.open("app/assets/images/#{x.type.name}.png"),
+                 filename: "#{x.type.name}.png", content_type: 'image/png')
+end
 
 ## ITEMS ##
 # Desert #
-tea = Item.create!(name: 'Spicy Tea', level: 1, element: 'fire', price: 18)
-tea.image.attach(io: File.open('app/assets/images/Tea.png'),
-                 filename: 'Tea.png', content_type: 'image/png')
+10.times do
+  tea = Item.create!(name: 'Spicy Tea', level: 1, element: 'fire', price: 18)
+  tea.image.attach(io: File.open('app/assets/images/Tea.png'),
+                   filename: 'Tea.png', content_type: 'image/png')
+end
 
-heat_pot = Item.create!(name: 'Potion of Heat', level: 2, element: 'fire', price: 26)
-heat_pot.image.attach(io: File.open('app/assets/images/Heat.png'),
-                      filename: 'Heat.png', content_type: 'image/png')
+6.times do
+  heat_pot = Item.create!(name: 'Potion of Heat', level: 2, element: 'fire', price: 26)
+  heat_pot.image.attach(io: File.open('app/assets/images/Heat.png'),
+                        filename: 'Heat.png', content_type: 'image/png')
+end
 
-immolation = Item.create!(name: 'Immolation Scroll', level: 3, element: 'fire', price: 40)
-immolation.image.attach(io: File.open('app/assets/images/Immolation.png'),
-                        filename: 'Immolation.png', content_type: 'image/png')
+2.times do
+  immolation = Item.create!(name: 'Immolation Scroll', level: 3, element: 'fire', price: 40)
+  immolation.image.attach(io: File.open('app/assets/images/Immolation.png'),
+                          filename: 'Immolation.png', content_type: 'image/png')
+end
 
 # Tundra #
-melon = Item.create!(name: 'Water Melon', level: 1, element: 'ice', price: 18)
-melon.image.attach(io: File.open('app/assets/images/Melon.png'),
-                   filename: 'Melon.png', content_type: 'image/png')
+10.times do
+  melon = Item.create!(name: 'Water Melon', level: 1, element: 'ice', price: 18)
+  melon.image.attach(io: File.open('app/assets/images/Melon.png'),
+                     filename: 'Melon.png', content_type: 'image/png')
+end
 
-cold_pot = Item.create!(name: 'Potion of Cold', level: 2, element: 'ice', price: 26)
-cold_pot.image.attach(io: File.open('app/assets/images/Cold.png'),
-                      filename: 'Cold.png', content_type: 'image/png')
+6.times do
+  cold_pot = Item.create!(name: 'Potion of Cold', level: 2, element: 'ice', price: 26)
+  cold_pot.image.attach(io: File.open('app/assets/images/Cold.png'),
+                        filename: 'Cold.png', content_type: 'image/png')
+end
 
-freezing = Item.create!(name: 'Freezing Scroll', level: 3, element: 'ice', price: 40)
-freezing.image.attach(io: File.open('app/assets/images/Freezing.png'),
-                      filename: 'Freezing.png', content_type: 'image/png')
+2.times do
+  freezing = Item.create!(name: 'Freezing Scroll', level: 3, element: 'ice', price: 40)
+  freezing.image.attach(io: File.open('app/assets/images/Freezing.png'),
+                        filename: 'Freezing.png', content_type: 'image/png')
+end
 
 # Forest #
-beans = Item.create!(name: 'Magic Beans', level: 1, element: 'nature', price: 18)
-beans.image.attach(io: File.open('app/assets/images/Beans.png'),
-                   filename: 'Beans.png', content_type: 'image/png')
+10.times do
+  beans = Item.create!(name: 'Magic Bean', level: 1, element: 'nature', price: 18)
+  beans.image.attach(io: File.open('app/assets/images/Beans.png'),
+                     filename: 'Beans.png', content_type: 'image/png')
+end
 
-strength_pot = Item.create!(name: 'Potion of Strength', level: 2, element: 'nature', price: 26)
-strength_pot.image.attach(io: File.open('app/assets/images/Strength.png'),
-                          filename: 'Strength.png', content_type: 'image/png')
+6.times do
+  strength_pot = Item.create!(name: 'Potion of Strength', level: 2, element: 'nature', price: 26)
+  strength_pot.image.attach(io: File.open('app/assets/images/Strength.png'),
+                            filename: 'Strength.png', content_type: 'image/png')
+end
 
-growth = Item.create!(name: 'Growth Scroll', level: 3, element: 'nature', price: 40)
-growth.image.attach(io: File.open('app/assets/images/Growth.png'),
-                    filename: 'Growth.png', content_type: 'image/png')
+2.times do
+  growth = Item.create!(name: 'Growth Scroll', level: 3, element: 'nature', price: 40)
+  growth.image.attach(io: File.open('app/assets/images/Growth.png'),
+                      filename: 'Growth.png', content_type: 'image/png')
+end
 
 # Mountains #
-fruit = Item.create!(name: 'Stone Fruit', level: 1, element: 'earth', price: 18)
-fruit.image.attach(io: File.open('app/assets/images/Fruit.png'),
-                   filename: 'Fruit.png', content_type: 'image/png')
+10.times do
+  fruit = Item.create!(name: 'Stone Fruit', level: 1, element: 'earth', price: 18)
+  fruit.image.attach(io: File.open('app/assets/images/Fruit.png'),
+                     filename: 'Fruit.png', content_type: 'image/png')
+end
 
-stone_pot = Item.create!(name: 'Potion of Stoneskin', level: 2, element: 'earth', price: 26)
-stone_pot.image.attach(io: File.open('app/assets/images/Stone.png'),
-                       filename: 'Stone.png', content_type: 'image/png')
+6.times do
+  stone_pot = Item.create!(name: 'Potion of Stoneskin', level: 2, element: 'earth', price: 26)
+  stone_pot.image.attach(io: File.open('app/assets/images/Stone.png'),
+                         filename: 'Stone.png', content_type: 'image/png')
+end
 
-fissure = Item.create!(name: 'Fissure Scroll', level: 3, element: 'earth', price: 40)
-fissure.image.attach(io: File.open('app/assets/images/Fissure.png'),
-                     filename: 'Fissure.png', content_type: 'image/png')
+2.times do
+  fissure = Item.create!(name: 'Fissure Scroll', level: 3, element: 'earth', price: 40)
+  fissure.image.attach(io: File.open('app/assets/images/Fissure.png'),
+                       filename: 'Fissure.png', content_type: 'image/png')
+end
 
 ## QUESTS ##
 Quest.create!(title: 'Explore ancient tombs in the desert',
@@ -206,6 +239,6 @@ Quest.create!(title: 'Mine for riches atop the mountains',
 p "#{Type.count}/18 Types created successfully"
 p "#{Quality.count}/6 Qualities created successfully"
 p "#{Enchant.count}/12 Enchants created successfully"
-p "#{Weapon.count}/10 Weapons created successfully"
-p "#{Item.count}/12 Items created successfully"
+p "#{Weapon.count}/32 Weapons created successfully"
+p "#{Item.count}/72 Items created successfully"
 p "#{Quest.count}/4 Quests created successfully"

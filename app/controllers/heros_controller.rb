@@ -25,6 +25,7 @@ class HerosController < ApplicationController
       redirect_to root_path
     rescue StandardError
       flash[:alert] = @hero.errors.full_messages.flatten.join(', ')
+      @hero.destroy
       redirect_to root_path
     end
   end

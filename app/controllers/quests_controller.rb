@@ -285,7 +285,7 @@ class QuestsController < ApplicationController
         @reward.image.attach(io: File.open('app/assets/images/Melon.png'),
                              filename: 'Melon.png', content_type: 'image/png')
       when 'nature'
-        @reward.update(name: 'Magic Beans')
+        @reward.update(name: 'Magic Bean')
         @reward.image.attach(io: File.open('app/assets/images/Beans.png'),
                              filename: 'Beans.png', content_type: 'image/png')
       when 'earth'
