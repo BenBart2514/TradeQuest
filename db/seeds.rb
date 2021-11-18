@@ -249,7 +249,7 @@ Quest.create!(title: 'Mine for riches atop the mountains',
               weakness: 'nature')
 
 p "#{Type.count}/18 Types created successfully"
-p "#{Quality.count}/6 Qualities created successfully"
+p "#{Quality.count}/9 Qualities created successfully"
 p "#{Enchant.count}/12 Enchants created successfully"
 p "#{Weapon.count}/20 Weapons created successfully"
 p "#{Item.count}/72 Items created successfully"
