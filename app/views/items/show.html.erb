@@ -17,7 +17,7 @@
   <div class="row">
     <p>
         <%= link_to "<< Back", root_path %>
-        <% if policy(@item).update? %>
+        <% if policy(@item).edit? %>
             |
             <%= link_to "Edit", edit_item_path(@item) %>
         <% end %>

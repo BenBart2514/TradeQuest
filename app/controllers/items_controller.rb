@@ -6,15 +6,13 @@ class ItemsController < ApplicationController
 
   def buy
     if @hero.gold < @item.price
-      # display message about user hero not having enough gold
+      flash[:alert] = "You don't have enough gold to pay for that!"
     else
-      # remove gold form buyer and add to seller
       @hero.update(gold: @hero.gold - @item.price)
       unless @item.hero.nil?
         seller = @item.hero
         seller.update(gold: seller.gold + @item.price)
       end
-      # remove item from seller and add item to user's hero and update price to nil to remove from marketplace
       @item.update(hero_id: @hero.id, price: nil)
     end
     redirect_to root_path

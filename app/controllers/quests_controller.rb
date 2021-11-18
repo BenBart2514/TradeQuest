@@ -38,7 +38,7 @@ class QuestsController < ApplicationController
         flash[:alert] =
           "#{@reward.name} was added to your inventory. You also claimed a #{@bonus_loot.name} on the journey!"
       else
-        flash[:alert] = "- #{@reward.name} was added to your inventory."
+        flash[:alert] = "#{@reward.name} was added to your inventory."
       end
     else
       redirect_to questing_path, notice: "Quest Failed! #{@hero.name} lost 50 Gold 1 Life point."
@@ -47,7 +47,7 @@ class QuestsController < ApplicationController
 
   def skip
     if @hero.gold < 25
-      # display error
+      flash[:alert] = 'You do not have enough gold to pay for lodgings!'
     else
       @hero.update(gold: @hero.gold - 25, quest_id: rand(1..4))
       if @hero.life == 5
