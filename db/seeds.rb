@@ -6,7 +6,6 @@
 #   movies = Movie.create!([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create!(name: 'Luke', movie: movies.first)
 
-User.destroy_all
 Type.destroy_all
 Quality.destroy_all
 Enchant.destroy_all
