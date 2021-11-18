@@ -111,19 +111,19 @@ pick.image.attach(io: File.open('app/assets/images/Pick.png'),
                   filename: 'Pick.png', content_type: 'image/png')
 
 4.times do
-  x = Weapon.create!(quality: Quality.find(rand(1..6)), type: Type.find(rand(1..18)),
+  x = Weapon.create!(quality: Quality.find(rand(2..6)), type: Type.find(rand(1..18)),
                      uses: 0)
   x.update(name: "#{x.quality.name} #{x.type.name}")
-  x.update(price: (x.type.damage * x.type.durability) + (x.quality.modifier * 50))
+  x.update(price: 50 + (x.type.damage * x.type.durability) + (x.quality.modifier * 50))
   x.image.attach(io: File.open("app/assets/images/#{x.type.name}.png"),
                  filename: "#{x.type.name}.png", content_type: 'image/png')
 end
 
 6.times do
-  x = Weapon.create!(quality: Quality.find(rand(1..6)), type: Type.find(rand(1..18)),
+  x = Weapon.create!(quality: Quality.find(rand(2..6)), type: Type.find(rand(1..18)),
                      enchant: Enchant.find(rand(1..12)), uses: 0)
   x.update(name: "#{x.quality.name} #{x.type.name} of #{x.enchant.name}")
-  x.update(price: (x.type.damage * x.type.durability) + (x.enchant.bonus * 10) + (x.quality.modifier * 50))
+  x.update(price: 50 + (x.type.damage * x.type.durability) + (x.enchant.bonus * 15) + (x.quality.modifier * 50))
   x.image.attach(io: File.open("app/assets/images/#{x.type.name}.png"),
                  filename: "#{x.type.name}.png", content_type: 'image/png')
 end
