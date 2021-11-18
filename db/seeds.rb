@@ -42,6 +42,10 @@ plain = Quality.create!(name: 'Plain', modifier: 0)          # 35% (7-13)
 fine = Quality.create!(name: 'Fine', modifier: 2)            # 20% (14-17)
 strong = Quality.create!(name: 'Strong', modifier: 5)        # 10% (18-19)
 master = Quality.create!(name: 'Masterwork', modifier: 10)   # 5%  (20)
+# Uniques #
+rare = Quality.create!(name: 'Rare', modifier: 4)
+epic = Quality.create!(name: 'Epic', modifier: 7)
+legendary = Quality.create!(name: 'Legendary', modifier: 12)
 
 ## ENCHANTS ##
 fire1 = Enchant.create!(name: 'Lesser Burning', bonus: 8, imbue: 'fire')         # 12 vs Tundra / 4 vs Desert
@@ -62,16 +66,16 @@ earth3 = Enchant.create!(name: 'Greater Agony', bonus: 20, imbue: 'earth')      
 
 ## WEAPONS ##
 # Placeholders #
-pilgrim = Weapon.create!(name: "Pilgrim's Staff", quality: fine, type: staff, enchant: ice1, uses: 0, price: 237)
+pilgrim = Weapon.create!(name: "Pilgrim's Staff", quality: rare, type: staff, enchant: ice1, uses: 0, price: 237)
 pilgrim.image.attach(io: File.open('app/assets/images/Pilgrim.png'),
                      filename: 'Pilgrim.png', content_type: 'image/png')
 
-owclb = Weapon.create!(name: 'Old War Club of Lesser Burning', quality: old, type: club, enchant: fire1, uses: 0,
-                       price: 360)
+owclb = Weapon.create!(name: 'Old War Club of Burning', quality: old, type: club, enchant: fire2, uses: 0,
+                       price: 314)
 owclb.image.attach(io: File.open('app/assets/images/War Club.png'),
                    filename: 'War Club.png', content_type: 'image/png')
 
-gladius = Weapon.create!(name: 'Flame Legion Gladius', quality: fine, type: falchion, enchant: fire1, uses: 0,
+gladius = Weapon.create!(name: 'Flame Legion Gladius', quality: rare, type: falchion, enchant: fire1, uses: 0,
                          price: 265)
 gladius.image.attach(io: File.open('app/assets/images/Gladius.png'),
                      filename: 'Gladius.png', content_type: 'image/png')
@@ -86,7 +90,7 @@ fbl = Weapon.create!(name: 'Fine Bardiche of Lifesteal', quality: fine, type: ba
 fbl.image.attach(io: File.open('app/assets/images/Bardiche.png'),
                  filename: 'Bardiche.png', content_type: 'image/png')
 
-woodaxe = Weapon.create!(name: "Woodsman's Axe", quality: fine, type: greataxe, enchant: earth1, uses: 0, price: 282)
+woodaxe = Weapon.create!(name: "Woodsman's Axe", quality: rare, type: greataxe, enchant: earth1, uses: 0, price: 282)
 woodaxe.image.attach(io: File.open('app/assets/images/Woodaxe.png'),
                      filename: 'Woodaxe.png', content_type: 'image/png')
 
@@ -94,7 +98,7 @@ cwa = Weapon.create!(name: 'Cheap War Axe', quality: cheap, type: cleaver, uses:
 cwa.image.attach(io: File.open('app/assets/images/War Axe.png'),
                  filename: 'War Axe.png', content_type: 'image/png')
 
-fg = Weapon.create!(name: 'Fine Greatsword', quality: fine, type: greatsword, uses: 0, price: 921)
+fg = Weapon.create!(name: 'Masterwork Greatsword', quality: master, type: greatsword, uses: 0, price: 1536)
 fg.image.attach(io: File.open('app/assets/images/Greatsword.png'),
                 filename: 'Greatsword.png', content_type: 'image/png')
 
@@ -102,29 +106,20 @@ haa = Weapon.create!(name: 'Hand Axe of Agony', quality: plain, type: handaxe, e
 haa.image.attach(io: File.open('app/assets/images/Hand Axe.png'),
                  filename: 'Hand Axe.png', content_type: 'image/png')
 
-pick = Weapon.create!(name: 'Military Pick', quality: fine, type: hatchet, enchant: nature1, uses: 0, price: 298)
+pick = Weapon.create!(name: 'Military Pick', quality: rare, type: hatchet, enchant: nature1, uses: 0, price: 298)
 pick.image.attach(io: File.open('app/assets/images/Pick.png'),
                   filename: 'Pick.png', content_type: 'image/png')
 
-# Desert #
-Weapon.create!(name: "Pilgrim's Staff", quality: fine, type: staff, enchant: ice1, uses: 0, price: 253)
-Weapon.create!(name: "Pharaoh's Kopesh", quality: strong, type: sword, enchant: nature2, uses: 0, price: 565)
-Weapon.create!(name: 'Spear of the Scorpion Queen', quality: master, type: pike, enchant: earth3, uses: 0, price: 1632)
-# Tundra #
-Weapon.create!(name: 'Flame Legion Gladius', quality: fine, type: falchion, enchant: fire1, uses: 0, price: 277)
-Weapon.create!(name: "Death Knight's Glaive", quality: strong, type: halberd, enchant: earth2, uses: 0, price: 1159)
-Weapon.create!(name: 'Scepter of Eternal Life', quality: master, type: morningstar, enchant: nature3, uses: 0,
-               price: 2864)
-# Forest #
-Weapon.create!(name: "Woodsman's Axe", quality: fine, type: greataxe, enchant: earth1, uses: 0, price: 292)
-Weapon.create!(name: "Goblin King's Pikestaff", quality: strong, type: spear, enchant: ice2, uses: 0, price: 805)
-Weapon.create!(name: 'Meteoric Battleaxe', quality: master, type: battleaxe, enchant: fire3, uses: 0, price: 2696)
-# Mountain #
-Weapon.create!(name: 'Military Pick', quality: fine, type: hatchet, enchant: nature1, uses: 0, price: 316)
-Weapon.create!(name: 'Volcanic Cudgel', quality: strong, type: mace, enchant: fire2, uses: 0, price: 864)
-Weapon.create!(name: "Stone Giant's Blade", quality: master, type: twohander, enchant: ice3, uses: 0, price: 2248)
+4.times do
+  x = Weapon.create!(quality: Quality.find(rand(1..6)), type: Type.find(rand(1..18)),
+                     uses: 0)
+  x.update(name: "#{x.quality.name} #{x.type.name}")
+  x.update(price: (x.type.damage * x.type.durability) + (x.quality.modifier * 50))
+  x.image.attach(io: File.open("app/assets/images/#{x.type.name}.png"),
+                 filename: "#{x.type.name}.png", content_type: 'image/png')
+end
 
-10.times do
+6.times do
   x = Weapon.create!(quality: Quality.find(rand(1..6)), type: Type.find(rand(1..18)),
                      enchant: Enchant.find(rand(1..12)), uses: 0)
   x.update(name: "#{x.quality.name} #{x.type.name} of #{x.enchant.name}")
@@ -132,6 +127,24 @@ Weapon.create!(name: "Stone Giant's Blade", quality: master, type: twohander, en
   x.image.attach(io: File.open("app/assets/images/#{x.type.name}.png"),
                  filename: "#{x.type.name}.png", content_type: 'image/png')
 end
+
+## Uniques ##
+# # Desert #
+# Weapon.create!(name: "Pilgrim's Staff", quality: rare, type: staff, enchant: ice1, uses: 0)
+# Weapon.create!(name: "Pharaoh's Kopesh", quality: epic, type: sword, enchant: nature2, uses: 0)
+# Weapon.create!(name: 'Spear of the Scorpion Queen', quality: legendary, type: pike, enchant: earth3, uses: 0)
+# # Tundra #
+# Weapon.create!(name: 'Flame Legion Gladius', quality: rare, type: falchion, enchant: fire1, uses: 0)
+# Weapon.create!(name: "Death Knight's Glaive", quality: epic, type: halberd, enchant: earth2, uses: 0)
+# Weapon.create!(name: 'Scepter of Eternal Life', quality: legendary, type: morningstar, enchant: nature3, uses: 0)
+# # Forest #
+# Weapon.create!(name: "Woodsman's Axe", quality: rare, type: greataxe, enchant: earth1, uses: 0)
+# Weapon.create!(name: "Goblin King's Pikestaff", quality: epic, type: spear, enchant: ice2, uses: 0)
+# Weapon.create!(name: 'Meteoric Battleaxe', quality: legendary, type: battleaxe, enchant: fire3, uses: 0)
+# # Mountain #
+# Weapon.create!(name: 'Military Pick', quality: rare, type: hatchet, enchant: nature1, uses: 0)
+# Weapon.create!(name: 'Volcanic Cudgel', quality: epic, type: mace, enchant: fire2, uses: 0)
+# Weapon.create!(name: "Stone Giant's Blade", quality: legendary, type: twohander, enchant: ice3, uses: 0)
 
 ## ITEMS ##
 # Desert #
@@ -238,6 +251,6 @@ Quest.create!(title: 'Mine for riches atop the mountains',
 p "#{Type.count}/18 Types created successfully"
 p "#{Quality.count}/6 Qualities created successfully"
 p "#{Enchant.count}/12 Enchants created successfully"
-p "#{Weapon.count}/32 Weapons created successfully"
+p "#{Weapon.count}/20 Weapons created successfully"
 p "#{Item.count}/72 Items created successfully"
 p "#{Quest.count}/4 Quests created successfully"
