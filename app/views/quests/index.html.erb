@@ -4,11 +4,11 @@
     <%= form_with model: @equipment do |f| %>
         <p>
             <%= f.label :weapon_id %>
-            <%= f.collection_select :weapon_id, @hero.weapons, :id, :name, {include_blank: 'None'} %>
+            <%= f.collection_select :weapon_id, @hero.weapons.where(price: nil), :id, :name, {include_blank: 'None'} %>
         </p>
         <p>
             <%= f.label :item_id %>
-            <%= f.collection_select :item_id, @hero.items, :id, :name, {include_blank: 'None'} %>
+            <%= f.collection_select :item_id, @hero.items.where(price: nil), :id, :name, {include_blank: 'None'} %>
         </p>
         <p>
             <%= f.submit %>

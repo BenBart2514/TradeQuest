@@ -3,6 +3,7 @@ class ItemsController < ApplicationController
   before_action :check_hero_exists
   before_action :find_item
   before_action :find_hero
+  before_action :check_stock, only: %i[buy]
 
   def buy
     if @hero.gold < @item.price
@@ -46,5 +47,11 @@ class ItemsController < ApplicationController
 
   def find_hero
     @hero = current_user.hero
+  end
+
+  def check_stock
+    return unless @item.price.nil? || @item.nil?
+
+    redirect_to root_path notice: 'Sorry, that item is no longer for sale.'
   end
 end

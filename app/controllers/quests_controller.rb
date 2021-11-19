@@ -112,7 +112,7 @@ class QuestsController < ApplicationController
       @base_bonus = @current_weapon.type.damage + (@current_weapon.quality.modifier * 2)
       @enchant_bonus = if @current_weapon.enchant.nil?
                          0
-                       elsif @current_weapon.enchant.imbue == @quest.element || @quest.resistance
+                       elsif @current_weapon.enchant.imbue == @quest.element || @current_weapon.enchant.imbue == @quest.resistance
                          @current_weapon.enchant.bonus / 2
                        elsif @current_weapon.enchant.imbue == @quest.weakness
                          @current_weapon.enchant.bonus * 1.5

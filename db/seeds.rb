@@ -26,14 +26,14 @@ halberd = Type.create!(name: 'Halberd', damage: 51, durability: 13)
 hammer = Type.create!(name: 'Warhammer', damage: 60, durability: 15)
 bardiche = Type.create!(name: 'Bardiche', damage: 64, durability: 13)
 greatsword = Type.create!(name: 'Greatsword', damage: 64, durability: 12)
-handaxe = Type.create!(name: 'Hand Axe', damage: 28, durability: 11)
+handaxe = Type.create!(name: 'Hand-Axe', damage: 28, durability: 11)
 ### TIER THREE ###
 twohander = Type.create!(name: 'Zweihander', damage: 66, durability: 14)
 pike = Type.create!(name: 'Pike', damage: 56, durability: 11)
 morningstar = Type.create!(name: 'Morningstar', damage: 77, durability: 16)
-battleaxe = Type.create!(name: 'Battle Axe', damage: 82, durability: 14)
-club = Type.create!(name: 'War Club', damage: 44, durability: 15)
-cleaver = Type.create!(name: 'War Axe', damage: 37, durability: 12)
+battleaxe = Type.create!(name: 'Battle-Axe', damage: 82, durability: 14)
+club = Type.create!(name: 'War-Club', damage: 44, durability: 15)
+cleaver = Type.create!(name: 'War-Axe', damage: 37, durability: 12)
 
 ## QUALITIES ##
 old = Quality.create!(name: 'Old', modifier: -5)             # 10% (1-2)
