@@ -72,7 +72,7 @@ pilgrim.image.attach(io: File.open('app/assets/images/Pilgrim.png'),
 
 owclb = Weapon.create!(name: 'Old War Club of Burning', quality: old, type: club, enchant: fire2, uses: 0,
                        price: 314)
-owclb.image.attach(io: File.open('app/assets/images/War Club.png'),
+owclb.image.attach(io: File.open('app/assets/images/War-Club.png'),
                    filename: 'War-Club.png', content_type: 'image/png')
 
 gladius = Weapon.create!(name: 'Flame Legion Gladius', quality: rare, type: falchion, enchant: fire1, uses: 0,
@@ -95,7 +95,7 @@ woodaxe.image.attach(io: File.open('app/assets/images/Woodaxe.png'),
                      filename: 'Woodaxe.png', content_type: 'image/png')
 
 cwa = Weapon.create!(name: 'Cheap War Axe', quality: cheap, type: cleaver, uses: 0, price: 310)
-cwa.image.attach(io: File.open('app/assets/images/War Axe.png'),
+cwa.image.attach(io: File.open('app/assets/images/War-Axe.png'),
                  filename: 'War-Axe.png', content_type: 'image/png')
 
 fg = Weapon.create!(name: 'Masterwork Greatsword', quality: master, type: greatsword, uses: 0, price: 1536)
@@ -103,7 +103,7 @@ fg.image.attach(io: File.open('app/assets/images/Greatsword.png'),
                 filename: 'Greatsword.png', content_type: 'image/png')
 
 haa = Weapon.create!(name: 'Hand Axe of Agony', quality: plain, type: handaxe, enchant: earth2, uses: 0, price: 408)
-haa.image.attach(io: File.open('app/assets/images/Hand Axe.png'),
+haa.image.attach(io: File.open('app/assets/images/Hand-Axe.png'),
                  filename: 'Hand-Axe.png', content_type: 'image/png')
 
 pick = Weapon.create!(name: 'Military Pick', quality: rare, type: hatchet, enchant: nature1, uses: 0, price: 298)
