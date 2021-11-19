@@ -111,7 +111,7 @@ pick.image.attach(io: File.open('app/assets/images/Pick.png'),
                   filename: 'Pick.png', content_type: 'image/png')
 
 6.times do
-  x = Weapon.create!(quality: Quality.find(rand(2..6)), type: Type.find(rand(1..18)),
+  x = Weapon.create!(quality: Quality.find(rand(2..4)), type: Type.find(rand(1..18)),
                      enchant: Enchant.find(rand(1..12)), uses: 0)
   x.update(name: "#{x.quality.name} #{x.type.name} of #{x.enchant.name}")
   x.update(price: (x.type.damage + x.quality.modifier) * (x.type.durability + x.quality.modifier) +
@@ -121,7 +121,7 @@ pick.image.attach(io: File.open('app/assets/images/Pick.png'),
 end
 
 4.times do
-  x = Weapon.create!(quality: Quality.find(rand(2..6)), type: Type.find(rand(1..18)),
+  x = Weapon.create!(quality: Quality.find(rand(2..4)), type: Type.find(rand(1..18)),
                      uses: 0)
   x.update(name: "#{x.quality.name} #{x.type.name}")
   x.update(price: (x.type.damage + x.quality.modifier) * (x.type.durability + x.quality.modifier))
