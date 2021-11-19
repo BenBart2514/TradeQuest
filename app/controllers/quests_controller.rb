@@ -350,48 +350,48 @@ class QuestsController < ApplicationController
 
   def weapon_drop
     weapon_roll = rand(1..3)
-    if weapon_roll == 3
-      type_roll = rand(1..6)
-      type = if type_roll < 3
-               rand(1..4)
-             elsif type_roll < 6
-               rand(5..12)
-             else
-               rand(13..18)
-             end
-      quality_roll = rand(1..20)
-      quality = if quality_roll < 3
-                  1
-                elsif quality_roll < 7
-                  2
-                elsif quality_roll < 14
-                  3
-                elsif quality_roll < 18
-                  4
-                elsif quality_roll < 20
-                  5
-                else
-                  6
-                end
-      enchant_roll = rand(1..10)
-      enchant = if enchant_roll < 5
-                  nil
-                elsif enchant_roll < 8
-                  Enchant.find_by(bonus: 8, imbue: @quest.element)
-                elsif enchant_roll < 10
-                  Enchant.find_by(bonus: 14, imbue: @quest.element)
-                else
-                  Enchant.find_by(bonus: 20, imbue: @quest.element)
-                end
-      @new_weapon = Weapon.create(hero_id: @hero.id, type: Type.find(type), quality: Quality.find(quality),
-                                  enchant: Enchant.find(enchant), uses: 0)
-      if @new_weapon.enchant.nil?
-        @new_weapon.update(name: "#{@new_weapon.quality.name} #{@new_weapon.type.name}")
-      else
-        @new_weapon.update(name: "#{@new_weapon.quality.name} #{@new_weapon.type.name} of #{@new_weapon.enchant.name}")
-      end
-      @new_weapon.image.attach(io: File.open("app/assets/images/#{@new_weapon.type.name}.png"),
-                               filename: "#{@new_weapon.type.name}.png", content_type: 'image/png')
+    return unless weapon_roll == 3
+
+    type_roll = rand(1..6)
+    type = if type_roll < 3
+             rand(1..4)
+           elsif type_roll < 6
+             rand(5..12)
+           else
+             rand(13..18)
+           end
+    quality_roll = rand(1..20)
+    quality = if quality_roll < 3
+                1
+              elsif quality_roll < 7
+                2
+              elsif quality_roll < 14
+                3
+              elsif quality_roll < 18
+                4
+              elsif quality_roll < 20
+                5
+              else
+                6
+              end
+    enchant_roll = rand(1..10)
+    enchant = if enchant_roll < 5
+                nil
+              elsif enchant_roll < 8
+                Enchant.find_by(bonus: 8, imbue: @quest.element)
+              elsif enchant_roll < 10
+                Enchant.find_by(bonus: 14, imbue: @quest.element)
+              else
+                Enchant.find_by(bonus: 20, imbue: @quest.element)
+              end
+    @new_weapon = Weapon.create(hero_id: @hero.id, type: Type.find(type), quality: Quality.find(quality),
+                                enchant: Enchant.find(enchant), uses: 0)
+    if @new_weapon.enchant.nil?
+      @new_weapon.update(name: "#{@new_weapon.quality.name} #{@new_weapon.type.name}")
+    else
+      @new_weapon.update(name: "#{@new_weapon.quality.name} #{@new_weapon.type.name} of #{@new_weapon.enchant.name}")
     end
+    @new_weapon.image.attach(io: File.open("app/assets/images/#{@new_weapon.type.name}.png"),
+                             filename: "#{@new_weapon.type.name}.png", content_type: 'image/png')
   end
 end

@@ -129,6 +129,23 @@ end
                  filename: "#{x.type.name}.png", content_type: 'image/png')
 end
 
+3.times do
+  x = Weapon.create!(quality: Quality.find(4..5), type: Type.find(rand(13..18)),
+                     enchant: Enchant.find(rand(1..12)), uses: 0)
+  x.update(name: "#{x.quality.name} #{x.type.name}")
+  x.update(price: (x.type.damage + x.quality.modifier) * (x.type.durability + x.quality.modifier) +
+           (x.enchant.bonus * (x.type.durability + x.quality.modifier)))
+  x.image.attach(io: File.open("app/assets/images/#{x.type.name}.png"),
+                 filename: "#{x.type.name}.png", content_type: 'image/png')
+end
+
+x = Weapon.create!(quality: Quality.find(6), type: Type.find(rand(5..12)),
+                   uses: 0)
+x.update(name: "#{x.quality.name} #{x.type.name}")
+x.update(price: (x.type.damage + x.quality.modifier) * (x.type.durability + x.quality.modifier))
+x.image.attach(io: File.open("app/assets/images/#{x.type.name}.png"),
+               filename: "#{x.type.name}.png", content_type: 'image/png')
+
 ## Uniques ##
 # # Desert #
 # Weapon.create!(name: "Pilgrim's Staff", quality: rare, type: staff, enchant: ice1, uses: 0)
@@ -252,6 +269,6 @@ Quest.create!(title: 'Mine for riches atop the mountains',
 p "#{Type.count}/18 Types created successfully"
 p "#{Quality.count}/9 Qualities created successfully"
 p "#{Enchant.count}/12 Enchants created successfully"
-p "#{Weapon.count}/20 Weapons created successfully"
+p "#{Weapon.count}/24 Weapons created successfully"
 p "#{Item.count}/72 Items created successfully"
 p "#{Quest.count}/4 Quests created successfully"
