@@ -20,7 +20,10 @@
   <div class="row">
     <p>
         <%= link_to "<< Back", root_path %>
+        <% unless @weapon.price.nil? %>
+        |
         <%= link_to "Buy Weapon", buy_weapon_path(@weapon.id) %>
+        <% end %>
         <% if policy(@weapon).edit? %>
             |
             <%= link_to "Edit", edit_weapon_path(@weapon) %>

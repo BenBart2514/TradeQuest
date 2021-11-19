@@ -47,6 +47,9 @@ class QuestsController < ApplicationController
       else
         flash[:alert] = "#{@reward.name} was added to your inventory."
       end
+    elsif bonus == true && success == false
+      redirect_to questing_path, notice: "Quest Failed! #{@hero.name} lost 50 Gold 1 Life point."
+      flash[:alert] = "However, you managed to find a #{@bonus_loot.name} on your way home!"
     else
       redirect_to questing_path, notice: "Quest Failed! #{@hero.name} lost 50 Gold 1 Life point."
     end
@@ -106,10 +109,11 @@ class QuestsController < ApplicationController
   end
 
   def determine_success
+    calc_remaining_uses
     @weapon_rating = 0
     @item_rating = 0
     unless @current_weapon == 'None'
-      @base_bonus = @current_weapon.type.damage + (@current_weapon.quality.modifier * 2)
+      @base_bonus = @current_weapon.type.damage + @current_weapon.quality.modifier + @remaining_uses
       @enchant_bonus = if @current_weapon.enchant.nil?
                          0
                        elsif @current_weapon.enchant.imbue == @quest.element || @current_weapon.enchant.imbue == @quest.resistance
@@ -129,7 +133,7 @@ class QuestsController < ApplicationController
         @item_rating = if @current_item.element == @quest.weakness
                          30
                        elsif @current_item.element == @quest.element
-                         5
+                         15
                        elsif @current_item.element == @quest.resistance
                          10
                        else
@@ -161,7 +165,7 @@ class QuestsController < ApplicationController
     @roll = rand(1..100)
     @result = @roll + @true_success_chance
     @success = true if @result >= 100
-    @bonus = true if @result > 150
+    @bonus = true if @result > 175
   end
 
   def fate_roll
@@ -187,7 +191,7 @@ class QuestsController < ApplicationController
   end
 
   def bonus
-    if @result < 200
+    if @result < 225
       if @quest.element == 'fire'
         @bonus_loot = Weapon.create!(hero_id: @hero.id, name: "Pilgrim's Staff", quality: Quality.find(7),
                                      type: Type.find(1), enchant: Enchant.find(4), uses: 0)
@@ -209,7 +213,7 @@ class QuestsController < ApplicationController
         @bonus_loot.image.attach(io: File.open('app/assets/images/Pick.png'),
                                  filename: 'Pick.png', content_type: 'image/png')
       end
-    elsif @result < 250
+    elsif @result < 275
       if @quest.element == 'fire'
         @bonus_loot = Weapon.create!(hero_id: @hero.id, name: "Pharaoh's Kopesh", quality: Quality.find(8),
                                      type: Type.find(5), enchant: Enchant.find(8), uses: 0)
@@ -231,7 +235,7 @@ class QuestsController < ApplicationController
         @bonus_loot.image.attach(io: File.open('app/assets/images/Cudgel.png'),
                                  filename: 'Cudgel.png', content_type: 'image/png')
       end
-    elsif @result > 250
+    elsif @result > 275
       if @quest.element == 'fire'
         @bonus_loot = Weapon.create!(hero_id: @hero.id, name: 'Spear of the Scorpion Queen', quality: Quality.find(9),
                                      type: Type.find(14), enchant: Enchant.find(12), uses: 0)
@@ -345,8 +349,8 @@ class QuestsController < ApplicationController
   end
 
   def weapon_drop
-    weapon_roll = rand(1..5)
-    if weapon_roll == 5
+    weapon_roll = rand(1..3)
+    if weapon_roll == 3
       type_roll = rand(1..6)
       type = if type_roll < 3
                rand(1..4)

@@ -1,8 +1,10 @@
+<main>
 <div class='sale_form'>
 <%= form_with model: @item do |f| %>
     <h5>How much gold would you like to sell this item for?</h5>
     <%= f.text_field :price %>
     <%= f.submit %>
 <% end %>
-    <%= link_to "<< Back", root_path %>
 </div>
+<%= link_to "<< Back", root_path %>
+</main>

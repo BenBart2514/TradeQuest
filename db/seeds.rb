@@ -37,7 +37,7 @@ cleaver = Type.create!(name: 'War-Axe', damage: 37, durability: 12)
 
 ## QUALITIES ##
 old = Quality.create!(name: 'Old', modifier: -5)             # 10% (1-2)
-cheap = Quality.create!(name: 'Cheap', modifier: -3)         # 20% (3-6)
+weak = Quality.create!(name: 'Weak', modifier: -3)           # 20% (3-6)
 plain = Quality.create!(name: 'Plain', modifier: 0)          # 35% (7-13)
 fine = Quality.create!(name: 'Fine', modifier: 2)            # 20% (14-17)
 strong = Quality.create!(name: 'Strong', modifier: 5)        # 10% (18-19)
@@ -94,7 +94,7 @@ woodaxe = Weapon.create!(name: "Woodsman's Axe", quality: rare, type: greataxe, 
 woodaxe.image.attach(io: File.open('app/assets/images/Woodaxe.png'),
                      filename: 'Woodaxe.png', content_type: 'image/png')
 
-cwa = Weapon.create!(name: 'Cheap War Axe', quality: cheap, type: cleaver, uses: 0, price: 310)
+cwa = Weapon.create!(name: 'Weak War-Axe', quality: weak, type: cleaver, uses: 0, price: 310)
 cwa.image.attach(io: File.open('app/assets/images/War-Axe.png'),
                  filename: 'War-Axe.png', content_type: 'image/png')
 
@@ -102,7 +102,7 @@ fg = Weapon.create!(name: 'Masterwork Greatsword', quality: master, type: greats
 fg.image.attach(io: File.open('app/assets/images/Greatsword.png'),
                 filename: 'Greatsword.png', content_type: 'image/png')
 
-haa = Weapon.create!(name: 'Hand Axe of Agony', quality: plain, type: handaxe, enchant: earth2, uses: 0, price: 408)
+haa = Weapon.create!(name: 'Hand-Axe of Agony', quality: plain, type: handaxe, enchant: earth2, uses: 0, price: 408)
 haa.image.attach(io: File.open('app/assets/images/Hand-Axe.png'),
                  filename: 'Hand-Axe.png', content_type: 'image/png')
 

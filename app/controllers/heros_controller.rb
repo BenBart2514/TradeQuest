@@ -21,14 +21,13 @@ class HerosController < ApplicationController
       Equipment.create(hero_id: @hero.id)
       first = Weapon.create(hero_id: @hero.id, name: 'Plain Sword', quality: Quality.find(3), type: Type.find(5),
                             uses: 0)
-      first.image.attach(io: File.open('app/assets/images/Sword.png'),
-                         filename: 'Sword.png', content_type: 'image/png')
-      redirect_to root_path
     rescue StandardError
       flash[:alert] = @hero.errors.full_messages.flatten.join(', ')
       @hero.destroy
-      redirect_to root_path
     end
+    first.image.attach(io: File.open('app/assets/images/Sword.png'),
+                       filename: 'Sword.png', content_type: 'image/png')
+    redirect_to root_path
   end
 
   private
