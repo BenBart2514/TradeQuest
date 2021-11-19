@@ -66,64 +66,65 @@ earth3 = Enchant.create!(name: 'Greater Agony', bonus: 20, imbue: 'earth')      
 
 ## WEAPONS ##
 # Placeholders #
-pilgrim = Weapon.create!(name: "Pilgrim's Staff", quality: rare, type: staff, enchant: ice1, uses: 0, price: 237)
+pilgrim = Weapon.create!(name: "Pilgrim's Staff", quality: rare, type: staff, enchant: ice1, uses: 0, price: 350)
 pilgrim.image.attach(io: File.open('app/assets/images/Pilgrim.png'),
                      filename: 'Pilgrim.png', content_type: 'image/png')
 
-owclb = Weapon.create!(name: 'Old War Club of Burning', quality: old, type: club, enchant: fire2, uses: 0,
-                       price: 314)
+owclb = Weapon.create!(name: 'Old War-Club of Burning', quality: old, type: club, enchant: fire2, uses: 0,
+                       price: 583)
 owclb.image.attach(io: File.open('app/assets/images/War-Club.png'),
                    filename: 'War-Club.png', content_type: 'image/png')
 
 gladius = Weapon.create!(name: 'Flame Legion Gladius', quality: rare, type: falchion, enchant: fire1, uses: 0,
-                         price: 265)
+                         price: 385)
 gladius.image.attach(io: File.open('app/assets/images/Gladius.png'),
                      filename: 'Gladius.png', content_type: 'image/png')
 
 sws = Weapon.create!(name: 'Strong Warhammer of Slowing', quality: strong, type: hammer, enchant: ice2, uses: 0,
-                     price: 1500)
+                     price: 1580)
 sws.image.attach(io: File.open('app/assets/images/Warhammer.png'),
                  filename: 'Warhammer.png', content_type: 'image/png')
 
 fbl = Weapon.create!(name: 'Fine Bardiche of Lifesteal', quality: fine, type: bardiche, enchant: nature2, uses: 0,
-                     price: 1118)
+                     price: 1200)
 fbl.image.attach(io: File.open('app/assets/images/Bardiche.png'),
                  filename: 'Bardiche.png', content_type: 'image/png')
 
-woodaxe = Weapon.create!(name: "Woodsman's Axe", quality: rare, type: greataxe, enchant: earth1, uses: 0, price: 282)
+woodaxe = Weapon.create!(name: "Woodsman's Axe", quality: rare, type: greataxe, enchant: earth1, uses: 0, price: 407)
 woodaxe.image.attach(io: File.open('app/assets/images/Woodaxe.png'),
                      filename: 'Woodaxe.png', content_type: 'image/png')
 
-cwa = Weapon.create!(name: 'Weak War-Axe', quality: weak, type: cleaver, uses: 0, price: 310)
+cwa = Weapon.create!(name: 'Weak War-Axe', quality: weak, type: cleaver, uses: 0, price: 306)
 cwa.image.attach(io: File.open('app/assets/images/War-Axe.png'),
                  filename: 'War-Axe.png', content_type: 'image/png')
 
-fg = Weapon.create!(name: 'Masterwork Greatsword', quality: master, type: greatsword, uses: 0, price: 1536)
+fg = Weapon.create!(name: 'Masterwork Greatsword', quality: master, type: greatsword, uses: 0, price: 1628)
 fg.image.attach(io: File.open('app/assets/images/Greatsword.png'),
                 filename: 'Greatsword.png', content_type: 'image/png')
 
-haa = Weapon.create!(name: 'Hand-Axe of Agony', quality: plain, type: handaxe, enchant: earth2, uses: 0, price: 408)
+haa = Weapon.create!(name: 'Hand-Axe of Agony', quality: plain, type: handaxe, enchant: earth2, uses: 0, price: 462)
 haa.image.attach(io: File.open('app/assets/images/Hand-Axe.png'),
                  filename: 'Hand-Axe.png', content_type: 'image/png')
 
-pick = Weapon.create!(name: 'Military Pick', quality: rare, type: hatchet, enchant: nature1, uses: 0, price: 298)
+pick = Weapon.create!(name: 'Military Pick', quality: rare, type: hatchet, enchant: nature1, uses: 0, price: 429)
 pick.image.attach(io: File.open('app/assets/images/Pick.png'),
                   filename: 'Pick.png', content_type: 'image/png')
-
-4.times do
-  x = Weapon.create!(quality: Quality.find(rand(2..6)), type: Type.find(rand(1..18)),
-                     uses: 0)
-  x.update(name: "#{x.quality.name} #{x.type.name}")
-  x.update(price: 50 + (x.type.damage * x.type.durability) + (x.quality.modifier * 50))
-  x.image.attach(io: File.open("app/assets/images/#{x.type.name}.png"),
-                 filename: "#{x.type.name}.png", content_type: 'image/png')
-end
 
 6.times do
   x = Weapon.create!(quality: Quality.find(rand(2..6)), type: Type.find(rand(1..18)),
                      enchant: Enchant.find(rand(1..12)), uses: 0)
   x.update(name: "#{x.quality.name} #{x.type.name} of #{x.enchant.name}")
-  x.update(price: 50 + (x.type.damage * x.type.durability) + (x.enchant.bonus * 15) + (x.quality.modifier * 50))
+  x.update(price: (x.type.damage + x.quality.modifier) * (x.type.durability + x.quality.modifier) +
+           (x.enchant.bonus * (x.type.durability + x.quality.modifier)))
+  x.image.attach(io: File.open("app/assets/images/#{x.type.name}.png"),
+                 filename: "#{x.type.name}.png", content_type: 'image/png')
+end
+
+4.times do
+  x = Weapon.create!(quality: Quality.find(rand(2..6)), type: Type.find(rand(1..18)),
+                     uses: 0)
+  x.update(name: "#{x.quality.name} #{x.type.name}")
+  x.update(price: (x.type.damage + x.quality.modifier) * (x.type.durability + x.quality.modifier))
   x.image.attach(io: File.open("app/assets/images/#{x.type.name}.png"),
                  filename: "#{x.type.name}.png", content_type: 'image/png')
 end

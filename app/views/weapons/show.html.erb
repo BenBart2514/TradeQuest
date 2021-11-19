@@ -5,7 +5,7 @@
   </div>
   <div class="row">
     <div class="col-sm">
-        <p>Damage: <%= @weapon.type.damage + (@weapon.quality.modifier * 2) %></p>
+        <p>Damage: <%= @weapon.type.damage + (@weapon.quality.modifier * 2) + @weapon.type.durability - @weapon.uses %></p>
         <p>Durability: <%= @weapon.type.durability + @weapon.quality.modifier - @weapon.uses %>/<%= @weapon.type.durability + @weapon.quality.modifier %></p>
         <% unless @weapon.enchant.nil? %>
         <p>Enchantment Type: <%= @weapon.enchant.imbue.capitalize %></p>
