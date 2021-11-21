@@ -45,6 +45,11 @@
   </section>
 
   <section id="listings">
+    <%= form_with url: '/search', method: :get do |f| %>
+      <%= f.label :search_listings %>
+      <%= f.text_field :query %>
+      <%= f.submit :Search %>
+    <% end %>
     <div class="row">
       <div class="col-sm">
         <h3>Weapon Shop</h3>

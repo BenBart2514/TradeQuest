@@ -14,5 +14,6 @@ Rails.application.routes.draw do
   get 'items/buyback/:id', to: 'items#buyback', as: 'buyback_item'
   get 'questing/result', to: 'quests#result', as: 'quest_result'
   get 'questing/skip', to: 'quests#skip', as: 'skip_quest'
+  get '/search', to: 'marketplace#search'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
