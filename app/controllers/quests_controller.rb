@@ -17,8 +17,8 @@ class QuestsController < ApplicationController
 
   def result
     @marked_for_death = false
-    @success = nil
-    @bonus = nil
+    @success = false
+    @bonus = false
     success_roll
     fate_roll
     gr_change
@@ -33,23 +33,22 @@ class QuestsController < ApplicationController
       @hero.destroy
       redirect_to questing_path, notice: 'You died... but the gods offer you another chance to live a new life.'
     elsif @success == true
-      redirect_to questing_path, notice: "Quest Successful! You've earned #{@result} Gold and Renown."
       if @bonus == true && @new_weapon.nil?
         flash[:alert] =
           "#{@reward.name} was added to your inventory. You also claimed a #{@bonus_loot.name} on the journey!"
-      elsif @bonus == true && @new_weapon == !nil?
+      elsif @bonus == true && @new_weapon == !nil
         flash[:alert] =
-          "#{@new_weapon.name} and #{@reward.name} were added to your inventory.
-          You also claimed a #{@bonus_loot.name} on the journey!"
-      elsif @bonus == false && @new_weapon == !nil?
+          "#{@new_weapon.name} and #{@reward.name} were added to your inventory. You also claimed a #{@bonus_loot.name} on the journey!"
+      elsif @bonus == false && @new_weapon == !nil
         flash[:alert] =
           "#{@new_weapon.name} and #{@reward.name} were added to your inventory."
       else
         flash[:alert] = "#{@reward.name} was added to your inventory."
       end
-    elsif bonus == true && success == false
-      redirect_to questing_path, notice: "Quest Failed! #{@hero.name} lost 50 Gold 1 Life point."
+      redirect_to questing_path, notice: "Quest Successful! You've earned #{@result} Gold and Renown."
+    elsif bonus == true && @success == false
       flash[:alert] = "However, you managed to find a #{@bonus_loot.name} on your way home!"
+      redirect_to questing_path, notice: "Quest Failed! #{@hero.name} lost 50 Gold 1 Life point."
     else
       redirect_to questing_path, notice: "Quest Failed! #{@hero.name} lost 50 Gold 1 Life point."
     end
@@ -165,7 +164,7 @@ class QuestsController < ApplicationController
     @roll = rand(1..100)
     @result = @roll + @true_success_chance
     @success = true if @result >= 100
-    @bonus = true if @result > 175
+    @bonus = true if @result > 200
   end
 
   def fate_roll
@@ -191,7 +190,7 @@ class QuestsController < ApplicationController
   end
 
   def bonus
-    if @result < 225
+    if @result < 250
       if @quest.element == 'fire'
         @bonus_loot = Weapon.create!(hero_id: @hero.id, name: "Pilgrim's Staff", quality: Quality.find(7),
                                      type: Type.find(1), enchant: Enchant.find(4), uses: 0)
@@ -213,7 +212,7 @@ class QuestsController < ApplicationController
         @bonus_loot.image.attach(io: File.open('app/assets/images/Pick.png'),
                                  filename: 'Pick.png', content_type: 'image/png')
       end
-    elsif @result < 275
+    elsif @result < 300
       if @quest.element == 'fire'
         @bonus_loot = Weapon.create!(hero_id: @hero.id, name: "Pharaoh's Kopesh", quality: Quality.find(8),
                                      type: Type.find(5), enchant: Enchant.find(8), uses: 0)
@@ -235,7 +234,7 @@ class QuestsController < ApplicationController
         @bonus_loot.image.attach(io: File.open('app/assets/images/Cudgel.png'),
                                  filename: 'Cudgel.png', content_type: 'image/png')
       end
-    elsif @result > 275
+    elsif @result > 300
       if @quest.element == 'fire'
         @bonus_loot = Weapon.create!(hero_id: @hero.id, name: 'Spear of the Scorpion Queen', quality: Quality.find(9),
                                      type: Type.find(14), enchant: Enchant.find(12), uses: 0)
@@ -349,6 +348,7 @@ class QuestsController < ApplicationController
   end
 
   def weapon_drop
+    @new_weapon = nil
     weapon_roll = rand(1..3)
     return unless weapon_roll == 3
 
@@ -384,8 +384,8 @@ class QuestsController < ApplicationController
               else
                 Enchant.find_by(bonus: 20, imbue: @quest.element)
               end
-    @new_weapon = Weapon.create(hero_id: @hero.id, type: Type.find(type), quality: Quality.find(quality),
-                                enchant: Enchant.find(enchant), uses: 0)
+    @new_weapon = Weapon.create(hero_id: @hero.id, type: Type.find_by(id: type), quality: Quality.find_by(id: quality),
+                                enchant: Enchant.find_by(id: enchant), uses: 0)
     if @new_weapon.enchant.nil?
       @new_weapon.update(name: "#{@new_weapon.quality.name} #{@new_weapon.type.name}")
     else
