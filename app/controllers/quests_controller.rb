@@ -17,6 +17,7 @@ class QuestsController < ApplicationController
 
   def result
     @marked_for_death = false
+    @weapon_drop = false
     @success = false
     @bonus = false
     success_roll
@@ -27,19 +28,26 @@ class QuestsController < ApplicationController
     destroy_item unless @current_item == 'None'
     damage_weapon unless @current_weapon == 'None'
     @hero.update(quest_id: rand(1..4))
+
+    p 'death, weapon, success, bonus'
+    p @marked_for_death
+    p @weapon_drop
+    p @success
+    p @bonus
+
     if @marked_for_death == true
       @equipment.update(weapon_id: nil, item_id: nil)
       @equipment.destroy
       @hero.destroy
       redirect_to questing_path, notice: 'You died... but the gods offer you another chance to live a new life.'
     elsif @success == true
-      if @bonus == true && @new_weapon.nil?
+      if @bonus == true && @weapon_drop == false
         flash[:alert] =
           "#{@reward.name} was added to your inventory. You also claimed a #{@bonus_loot.name} on the journey!"
-      elsif @bonus == true && @new_weapon == !nil
+      elsif @bonus == true && @weapon_drop == true
         flash[:alert] =
           "#{@new_weapon.name} and #{@reward.name} were added to your inventory. You also claimed a #{@bonus_loot.name} on the journey!"
-      elsif @bonus == false && @new_weapon == !nil
+      elsif @bonus == false && @weapon_drop == true
         flash[:alert] =
           "#{@new_weapon.name} and #{@reward.name} were added to your inventory."
       else
@@ -130,10 +138,8 @@ class QuestsController < ApplicationController
         @item_rating = 20
       elsif @current_item.level == 2
         @item_rating = if @current_item.element == @quest.weakness
-                         30
-                       elsif @current_item.element == @quest.element
-                         15
-                       elsif @current_item.element == @quest.resistance
+                         40
+                       elsif @current_item.element == @quest.element || @current_item.element == @quest.resistance
                          10
                        else
                          20
@@ -348,9 +354,10 @@ class QuestsController < ApplicationController
   end
 
   def weapon_drop
-    @new_weapon = nil
     weapon_roll = rand(1..3)
     return unless weapon_roll == 3
+
+    @weapon_drop = true
 
     type_roll = rand(1..6)
     type = if type_roll < 3
