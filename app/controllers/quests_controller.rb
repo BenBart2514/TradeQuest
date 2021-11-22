@@ -46,10 +46,10 @@ class QuestsController < ApplicationController
           "#{@reward.name} was added to your inventory. You also claimed a #{@bonus_loot.name} on the journey!"
       elsif @bonus == true && @weapon_drop == true
         flash[:alert] =
-          "#{@new_weapon.name} and #{@reward.name} were added to your inventory. You also claimed a #{@bonus_loot.name} on the journey!"
+          "#{@new_weapon.name} and one #{@reward.name} was added to your inventory. You also claimed a #{@bonus_loot.name} on the journey!"
       elsif @bonus == false && @weapon_drop == true
         flash[:alert] =
-          "#{@new_weapon.name} and #{@reward.name} were added to your inventory."
+          "#{@new_weapon.name} and one #{@reward.name} was added to your inventory."
       else
         flash[:alert] = "#{@reward.name} was added to your inventory."
       end
@@ -185,8 +185,8 @@ class QuestsController < ApplicationController
 
   def gr_change
     if @success == true
-      @hero.gold += @result
-      @hero.renown += @result
+      @hero.gold += (@result / 2)
+      @hero.renown += (@result / 2)
     elsif @hero.gold < 50
       @marked_for_death = true
     else
@@ -354,8 +354,8 @@ class QuestsController < ApplicationController
   end
 
   def weapon_drop
-    weapon_roll = rand(1..3)
-    return unless weapon_roll == 3
+    weapon_roll = rand(1..5)
+    return unless weapon_roll == 5
 
     @weapon_drop = true
 

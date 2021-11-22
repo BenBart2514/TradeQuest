@@ -166,80 +166,56 @@ x.image.attach(io: File.open("app/assets/images/#{x.type.name}.png"),
 
 ## ITEMS ##
 # Desert #
-10.times do
-  tea = Item.create!(name: 'Spicy Tea', level: 1, element: 'fire', price: 18)
-  tea.image.attach(io: File.open('app/assets/images/Tea.png'),
-                   filename: 'Tea.png', content_type: 'image/png')
-end
+tea = Item.create!(name: 'Spicy Tea', level: 1, element: 'fire', price: 18)
+tea.image.attach(io: File.open("app/assets/images/#{@item.element}#{@item.level}.png"),
+                 filename: "#{@item.element}#{@item.level}.png", content_type: 'image/png')
 
-6.times do
-  heat_pot = Item.create!(name: 'Potion of Heat', level: 2, element: 'fire', price: 26)
-  heat_pot.image.attach(io: File.open('app/assets/images/Heat.png'),
-                        filename: 'Heat.png', content_type: 'image/png')
-end
+heat_pot = Item.create!(name: 'Potion of Heat', level: 2, element: 'fire', price: 26)
+heat_pot.image.attach(io: File.open("app/assets/images/#{@item.element}#{@item.level}.png"),
+                      filename: "#{@item.element}#{@item.level}.png", content_type: 'image/png')
 
-2.times do
-  immolation = Item.create!(name: 'Immolation Scroll', level: 3, element: 'fire', price: 40)
-  immolation.image.attach(io: File.open('app/assets/images/Immolation.png'),
-                          filename: 'Immolation.png', content_type: 'image/png')
-end
+immolation = Item.create!(name: 'Immolation Scroll', level: 3, element: 'fire', price: 40)
+immolation.image.attach(io: File.open("app/assets/images/#{@item.element}#{@item.level}.png"),
+                        filename: "#{@item.element}#{@item.level}.png", content_type: 'image/png')
 
 # Tundra #
-10.times do
-  melon = Item.create!(name: 'Water Melon', level: 1, element: 'ice', price: 18)
-  melon.image.attach(io: File.open('app/assets/images/Melon.png'),
-                     filename: 'Melon.png', content_type: 'image/png')
-end
+melon = Item.create!(name: 'Water Melon', level: 1, element: 'ice', price: 18)
+melon.image.attach(io: File.open("app/assets/images/#{@item.element}#{@item.level}.png"),
+                   filename: "#{@item.element}#{@item.level}.png", content_type: 'image/png')
 
-6.times do
-  cold_pot = Item.create!(name: 'Potion of Cold', level: 2, element: 'ice', price: 26)
-  cold_pot.image.attach(io: File.open('app/assets/images/Cold.png'),
-                        filename: 'Cold.png', content_type: 'image/png')
-end
+cold_pot = Item.create!(name: 'Potion of Cold', level: 2, element: 'ice', price: 26)
+cold_pot.image.attach(io: File.open("app/assets/images/#{@item.element}#{@item.level}.png"),
+                      filename: "#{@item.element}#{@item.level}.png", content_type: 'image/png')
 
-2.times do
-  freezing = Item.create!(name: 'Freezing Scroll', level: 3, element: 'ice', price: 40)
-  freezing.image.attach(io: File.open('app/assets/images/Freezing.png'),
-                        filename: 'Freezing.png', content_type: 'image/png')
-end
+freezing = Item.create!(name: 'Freezing Scroll', level: 3, element: 'ice', price: 40)
+freezing.image.attach(io: File.open("app/assets/images/#{@item.element}#{@item.level}.png"),
+                      filename: "#{@item.element}#{@item.level}.png", content_type: 'image/png')
 
 # Forest #
-10.times do
-  beans = Item.create!(name: 'Magic Bean', level: 1, element: 'nature', price: 18)
-  beans.image.attach(io: File.open('app/assets/images/Beans.png'),
-                     filename: 'Beans.png', content_type: 'image/png')
-end
+beans = Item.create!(name: 'Magic Bean', level: 1, element: 'nature', price: 18)
+beans.image.attach(io: File.open("app/assets/images/#{@item.element}#{@item.level}.png"),
+                   filename: "#{@item.element}#{@item.level}.png", content_type: 'image/png')
 
-6.times do
-  strength_pot = Item.create!(name: 'Potion of Strength', level: 2, element: 'nature', price: 26)
-  strength_pot.image.attach(io: File.open('app/assets/images/Strength.png'),
-                            filename: 'Strength.png', content_type: 'image/png')
-end
+strength_pot = Item.create!(name: 'Potion of Strength', level: 2, element: 'nature', price: 26)
+strength_pot.image.attach(io: File.open("app/assets/images/#{@item.element}#{@item.level}.png"),
+                          filename: "#{@item.element}#{@item.level}.png", content_type: 'image/png')
 
-2.times do
-  growth = Item.create!(name: 'Growth Scroll', level: 3, element: 'nature', price: 40)
-  growth.image.attach(io: File.open('app/assets/images/Growth.png'),
-                      filename: 'Growth.png', content_type: 'image/png')
-end
+growth = Item.create!(name: 'Growth Scroll', level: 3, element: 'nature', price: 40)
+growth.image.attach(io: File.open("app/assets/images/#{@item.element}#{@item.level}.png"),
+                    filename: "#{@item.element}#{@item.level}.png", content_type: 'image/png')
 
 # Mountains #
-10.times do
-  fruit = Item.create!(name: 'Stone Fruit', level: 1, element: 'earth', price: 18)
-  fruit.image.attach(io: File.open('app/assets/images/Fruit.png'),
-                     filename: 'Fruit.png', content_type: 'image/png')
-end
+fruit = Item.create!(name: 'Stone Fruit', level: 1, element: 'earth', price: 18)
+fruit.image.attach(io: File.open("app/assets/images/#{@item.element}#{@item.level}.png"),
+                   filename: "#{@item.element}#{@item.level}.png", content_type: 'image/png')
 
-6.times do
-  stone_pot = Item.create!(name: 'Potion of Stoneskin', level: 2, element: 'earth', price: 26)
-  stone_pot.image.attach(io: File.open('app/assets/images/Stone.png'),
-                         filename: 'Stone.png', content_type: 'image/png')
-end
+stone_pot = Item.create!(name: 'Potion of Stoneskin', level: 2, element: 'earth', price: 26)
+stone_pot.image.attach(io: File.open("app/assets/images/#{@item.element}#{@item.level}.png"),
+                       filename: "#{@item.element}#{@item.level}.png", content_type: 'image/png')
 
-2.times do
-  fissure = Item.create!(name: 'Fissure Scroll', level: 3, element: 'earth', price: 40)
-  fissure.image.attach(io: File.open('app/assets/images/Fissure.png'),
-                       filename: 'Fissure.png', content_type: 'image/png')
-end
+fissure = Item.create!(name: 'Fissure Scroll', level: 3, element: 'earth', price: 40)
+fissure.image.attach(io: File.open("app/assets/images/#{@item.element}#{@item.level}.png"),
+                     filename: "#{@item.element}#{@item.level}.png", content_type: 'image/png')
 
 ## QUESTS ##
 Quest.create!(title: 'Explore ancient tombs in the desert',
@@ -270,5 +246,5 @@ p "#{Type.count}/18 Types created successfully"
 p "#{Quality.count}/9 Qualities created successfully"
 p "#{Enchant.count}/12 Enchants created successfully"
 p "#{Weapon.count}/24 Weapons created successfully"
-p "#{Item.count}/72 Items created successfully"
+p "#{Item.count}/12 Items created successfully"
 p "#{Quest.count}/4 Quests created successfully"

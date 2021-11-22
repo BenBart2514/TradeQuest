@@ -8,12 +8,15 @@ class ItemsController < ApplicationController
   def buy
     if @hero.gold < @item.price
       flash[:alert] = "You don't have enough gold to pay for that!"
-    else
+    elsif @item.hero.nil?
       @hero.update(gold: @hero.gold - @item.price)
-      unless @item.hero.nil?
-        seller = @item.hero
-        seller.update(gold: seller.gold + @item.price)
-      end
+      purchase = Item.create(hero_id: @hero.id, name: @item.name, level: @item.level, element: @item.element)
+      purchase.image.attach(io: File.open("app/assets/images/#{@item.element}#{@item.level}.png"),
+                            filename: "#{@item.element}#{@item.level}.png", content_type: 'image/png')
+    else
+      seller = @item.hero
+      @hero.update(gold: @hero.gold - @item.price)
+      seller.update(gold: seller.gold + @item.price)
       @item.update(hero_id: @hero.id, price: nil)
     end
     redirect_to root_path

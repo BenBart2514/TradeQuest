@@ -28,11 +28,11 @@ class MarketplaceController < ApplicationController
     @sale_items = []
 
     @weapons.each do |weapon|
-      @sale_weapons << weapon unless weapon.price.nil? || weapon.hero_id == current_user.hero.id
+      @sale_weapons << weapon unless weapon.price.nil?
     end
 
     @items.each do |item|
-      @sale_items << item unless item.price.nil? || item.hero_id == current_user.hero.id
+      @sale_items << item unless item.price.nil?
     end
   end
 
