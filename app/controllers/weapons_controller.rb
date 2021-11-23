@@ -21,6 +21,7 @@ class WeaponsController < ApplicationController
 
   def sell
     approximate_value
+    @value /= 2
   end
 
   def update
@@ -58,9 +59,10 @@ class WeaponsController < ApplicationController
   end
 
   def approximate_value
-    @value = (@weapon.type.damage + @weapon.quality.modifier) * (@weapon.type.durability + @weapon.quality.modifier)
+    @value = (@weapon.type.damage + @weapon.quality.modifier) *
+             (@weapon.type.durability + @weapon.quality.modifier - @weapon.uses)
     return if @weapon.enchant.nil?
 
-    @value += (@weapon.enchant.bonus * (@weapon.type.durability + @weapon.quality.modifier))
+    @value += (@weapon.enchant.bonus * (@weapon.type.durability + @weapon.quality.modifier - @weapon.uses))
   end
 end
