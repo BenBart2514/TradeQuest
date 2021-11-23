@@ -130,8 +130,7 @@ class QuestsController < ApplicationController
                        else
                          @current_weapon.enchant.bonus
                        end
-      @enchant_bonus = @enchant_bonus.to_i
-      @weapon_rating = @base_bonus + @enchant_bonus
+      @weapon_rating = @base_bonus + @enchant_bonus.to_i
     end
     unless @current_item == 'None'
       if @current_item.level == 1 && @current_item.element == @quest.weakness
@@ -197,66 +196,69 @@ class QuestsController < ApplicationController
 
   def bonus
     if @result < 250
-      if @quest.element == 'fire'
+      case @quest.element
+      when 'fire'
         @bonus_loot = Weapon.create!(hero_id: @hero.id, name: "Pilgrim's Staff", quality: Quality.find(7),
                                      type: Type.find(1), enchant: Enchant.find(4), uses: 0)
         @bonus_loot.image.attach(io: File.open('app/assets/images/Pilgrim.png'),
                                  filename: 'Pilgrim.png', content_type: 'image/png')
-      elsif @quest.element == 'ice'
+      when 'ice'
         @bonus_loot = Weapon.create!(hero_id: @hero.id, name: 'Flame Legion Gladius', quality: Quality.find(7),
                                      type: Type.find(3), enchant: Enchant.find(1), uses: 0)
         @bonus_loot.image.attach(io: File.open('app/assets/images/Gladius.png'),
                                  filename: 'Gladius.png', content_type: 'image/png')
-      elsif @quest.element == 'nature'
+      when 'nature'
         @bonus_loot = Weapon.create!(hero_id: @hero.id, name: "Woodsman's Axe", quality: Quality.find(7),
                                      type: Type.find(4), enchant: Enchant.find(10), uses: 0)
         @bonus_loot.image.attach(io: File.open('app/assets/images/Woodaxe.png'),
                                  filename: 'Woodaxe.png', content_type: 'image/png')
-      else
+      when 'earth'
         @bonus_loot = Weapon.create!(hero_id: @hero.id, name: 'Military Pick', quality: Quality.find(7),
                                      type: Type.find(2), enchant: Enchant.find(7), uses: 0)
         @bonus_loot.image.attach(io: File.open('app/assets/images/Pick.png'),
                                  filename: 'Pick.png', content_type: 'image/png')
       end
     elsif @result < 300
-      if @quest.element == 'fire'
+      case @quest.element
+      when 'fire'
         @bonus_loot = Weapon.create!(hero_id: @hero.id, name: "Pharaoh's Kopesh", quality: Quality.find(8),
                                      type: Type.find(5), enchant: Enchant.find(8), uses: 0)
         @bonus_loot.image.attach(io: File.open('app/assets/images/Kopesh.png'),
                                  filename: 'Kopesh.png', content_type: 'image/png')
-      elsif @quest.element == 'ice'
+      when 'ice'
         @bonus_loot = Weapon.create!(hero_id: @hero.id, name: "Death Knight's Glaive", quality: Quality.find(8),
                                      type: Type.find(8), enchant: Enchant.find(11), uses: 0)
         @bonus_loot.image.attach(io: File.open('app/assets/images/Glaive.png'),
                                  filename: 'Glaive.png', content_type: 'image/png')
-      elsif @quest.element == 'nature'
+      when 'nature'
         @bonus_loot = Weapon.create!(hero_id: @hero.id, name: "Goblin King's Pikestaff", quality: Quality.find(8),
                                      type: Type.find(6), enchant: Enchant.find(5), uses: 0)
         @bonus_loot.image.attach(io: File.open('app/assets/images/Goblin.png'),
                                  filename: 'Goblin.png', content_type: 'image/png')
-      else
+      when 'earth'
         @bonus_loot = Weapon.create!(hero_id: @hero.id, name: 'Volcanic Cudgel', quality: Quality.find(8),
                                      type: Type.find(7), enchant: Enchant.find(2), uses: 0)
         @bonus_loot.image.attach(io: File.open('app/assets/images/Cudgel.png'),
                                  filename: 'Cudgel.png', content_type: 'image/png')
       end
-    elsif @result > 300
-      if @quest.element == 'fire'
+    else
+      case @quest.element
+      when 'fire'
         @bonus_loot = Weapon.create!(hero_id: @hero.id, name: 'Spear of the Scorpion Queen', quality: Quality.find(9),
                                      type: Type.find(14), enchant: Enchant.find(12), uses: 0)
         @bonus_loot.image.attach(io: File.open('app/assets/images/Scorpion.png'),
                                  filename: 'Scorpion.png', content_type: 'image/png')
-      elsif @quest.element == 'ice'
+      when 'ice'
         @bonus_loot = Weapon.create!(hero_id: @hero.id, name: 'Scepter of Eternal Life', quality: Quality.find(9),
                                      type: Type.find(15), enchant: Enchant.find(9), uses: 0)
         @bonus_loot.image.attach(io: File.open('app/assets/images/Scepter.png'),
                                  filename: 'Scepter.png', content_type: 'image/png')
-      elsif @quest.element == 'nature'
+      when 'nature'
         @bonus_loot = Weapon.create!(hero_id: @hero.id, name: 'Meteoric Battleaxe', quality: Quality.find(9),
                                      type: Type.find(16), enchant: Enchant.find(3), uses: 0)
         @bonus_loot.image.attach(io: File.open('app/assets/images/Meteoric.png'),
                                  filename: 'Meteoric.png', content_type: 'image/png')
-      else
+      when 'earth'
         @bonus_loot = Weapon.create!(hero_id: @hero.id, name: "Stone Giant's Blade", quality: Quality.find(9),
                                      type: Type.find(13), enchant: Enchant.find(6), uses: 0)
         @bonus_loot.image.attach(io: File.open('app/assets/images/Giant.png'),
@@ -294,62 +296,40 @@ class QuestsController < ApplicationController
       case @quest.element
       when 'fire'
         @reward.update(name: 'Spicy Tea')
-        @reward.image.attach(io: File.open('app/assets/images/Tea.png'),
-                             filename: 'Tea.png', content_type: 'image/png')
       when 'ice'
         @reward.update(name: 'Water Melon')
-        @reward.image.attach(io: File.open('app/assets/images/Melon.png'),
-                             filename: 'Melon.png', content_type: 'image/png')
       when 'nature'
         @reward.update(name: 'Magic Bean')
-        @reward.image.attach(io: File.open('app/assets/images/Beans.png'),
-                             filename: 'Beans.png', content_type: 'image/png')
       when 'earth'
         @reward.update(name: 'Stone Fruit')
-        @reward.image.attach(io: File.open('app/assets/images/Fruit.png'),
-                             filename: 'Fruit.png', content_type: 'image/png')
       end
     elsif loot_drop < 9
       @reward = Item.create(hero_id: @hero.id, level: 2, element: @quest.element)
       case @quest.element
       when 'fire'
         @reward.update(name: 'Potion of Heat')
-        @reward.image.attach(io: File.open('app/assets/images/Heat.png'),
-                             filename: 'Heat.png', content_type: 'image/png')
       when 'ice'
         @reward.update(name: 'Potion of Cold')
-        @reward.image.attach(io: File.open('app/assets/images/Cold.png'),
-                             filename: 'Cold.png', content_type: 'image/png')
       when 'nature'
         @reward.update(name: 'Potion of Strength')
-        @reward.image.attach(io: File.open('app/assets/images/Strength.png'),
-                             filename: 'Strength.png', content_type: 'image/png')
       when 'earth'
         @reward.update(name: 'Potion of Stoneskin')
-        @reward.image.attach(io: File.open('app/assets/images/Stone.png'),
-                             filename: 'Stone.png', content_type: 'image/png')
       end
     else
       @reward = Item.create(hero_id: @hero.id, level: 3, element: @quest.element)
       case @quest.element
       when 'fire'
         @reward.update(name: 'Immolation Scroll')
-        @reward.image.attach(io: File.open('app/assets/images/Immolation.png'),
-                             filename: 'Immolation.png', content_type: 'image/png')
       when 'ice'
         @reward.update(name: 'Freezing Scroll')
-        @reward.image.attach(io: File.open('app/assets/images/Freezing.png'),
-                             filename: 'Freezing.png', content_type: 'image/png')
       when 'nature'
         @reward.update(name: 'Growth Scroll')
-        @reward.image.attach(io: File.open('app/assets/images/Growth.png'),
-                             filename: 'Growth.png', content_type: 'image/png')
       when 'earth'
         @reward.update(name: 'Fissure Scroll')
-        @reward.image.attach(io: File.open('app/assets/images/Fissure.png'),
-                             filename: 'Fissure.png', content_type: 'image/png')
       end
     end
+    @reward.image.attach(io: File.open("app/assets/images/#{@reward.element}#{@reward.level}.png"),
+                         filename: "#{@reward.element}#{@reward.level}.png", content_type: 'image/png')
     weapon_drop
   end
 
