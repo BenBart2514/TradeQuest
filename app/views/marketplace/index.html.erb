@@ -46,9 +46,13 @@
 
   <section id="listings">
     <%= form_with url: '/search', method: :get do |f| %>
+      <div class="d-flex justify-content-center">
       <%= f.label :search_listings %>
+      <p>
       <%= f.text_field :query %>
       <%= f.submit :Search %>
+      </p>
+      </div>
     <% end %>
     <div class="row">
       <div class="col-sm">

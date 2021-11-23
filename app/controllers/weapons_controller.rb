@@ -19,7 +19,9 @@ class WeaponsController < ApplicationController
     redirect_to root_path
   end
 
-  def sell; end
+  def sell
+    approximate_value
+  end
 
   def update
     @weapon.update(weapon_params)
@@ -53,5 +55,12 @@ class WeaponsController < ApplicationController
     return unless @weapon.price.nil? || @weapon.nil?
 
     redirect_to root_path notice: 'Sorry, that weapon is no longer for sale.'
+  end
+
+  def approximate_value
+    @value = (@weapon.type.damage + @weapon.quality.modifier) * (@weapon.type.durability + @weapon.quality.modifier)
+    return if @weapon.enchant.nil?
+
+    @value += (@weapon.enchant.bonus * (@weapon.type.durability + @weapon.quality.modifier))
   end
 end

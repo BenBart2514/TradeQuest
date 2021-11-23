@@ -38,10 +38,19 @@ table {
 }
 
 @media only screen and (max-width: 425px) {
+    #inventory {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
     .inventory_scrollbar {
         max-height: 200px;
+        width: 95%;
+        margin-bottom: 40px;
     }
     .shop_scrollbar {
         max-height: 300px;
+        width: 95%;
+        margin-bottom: 40px;
     }
 }
