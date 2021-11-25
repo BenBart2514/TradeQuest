@@ -169,7 +169,7 @@ class QuestsController < ApplicationController
     @roll = rand(0..100)
     @result = @roll + @true_success_chance
     @success = true if @result >= 100
-    @bonus = true if @result > 200
+    bonus if @result > 150
   end
 
   def fate_roll
@@ -195,7 +195,12 @@ class QuestsController < ApplicationController
   end
 
   def bonus
-    if @result < 250
+    bonus_roll = rand(1..3)
+    return unless bonus_roll == 3
+
+    @bonus = true
+
+    if @result < 200
       case @quest.element
       when 'fire'
         @bonus_loot = Weapon.create!(hero_id: @hero.id, name: "Pilgrim's Staff", quality: Quality.find(7),
@@ -218,7 +223,7 @@ class QuestsController < ApplicationController
         @bonus_loot.image.attach(io: File.open('app/assets/images/Pick.png'),
                                  filename: 'Pick.png', content_type: 'image/png')
       end
-    elsif @result < 300
+    elsif @result < 250
       case @quest.element
       when 'fire'
         @bonus_loot = Weapon.create!(hero_id: @hero.id, name: "Pharaoh's Kopesh", quality: Quality.find(8),
