@@ -1,8 +1,8 @@
 class ItemsController < ApplicationController
   before_action :check_authorization
   before_action :check_hero_exists
-  before_action :find_item
   before_action :find_hero
+  before_action :find_item, except: %i[create new]
   before_action :check_stock, only: %i[buy]
 
   def buy
@@ -19,19 +19,41 @@ class ItemsController < ApplicationController
       seller.update(gold: seller.gold + @item.price)
       @item.update(hero_id: @hero.id, price: nil)
     end
-    redirect_to root_path
+    redirect_to root_path, notice: "#{@item.name} has been added to your inventory"
   end
 
   def sell; end
 
-  def update
-    @item.update(item_params)
-    redirect_to root_path
-  end
-
   def buyback
     @item.update(price: nil)
-    redirect_to root_path
+    redirect_to root_path, notice: "#{@item.name} has been removed from the market"
+  end
+
+  def update
+    @item.update(item_params)
+    redirect_to root_path, notice: "#{@item.name} has been updated!"
+  end
+
+  def destroy
+    @hero.equipment.update(item_id: nil)
+    @item.destroy
+    redirect_to root_path, notice: "#{@item.name} has been destroyed!"
+  end
+
+  def new
+    @item = Item.new
+  end
+
+  def create
+    @item = Item.new(item_params)
+    @item.assign_attributes(hero_id: @hero.id)
+    begin
+      @item.save!
+      redirect_to root_path, notice: "#{@item.name} has been created!"
+    rescue StandardError
+      flash.now[:errors] = @item.errors.messages.values.flatten
+      render 'new'
+    end
   end
 
   private
@@ -41,7 +63,7 @@ class ItemsController < ApplicationController
   end
 
   def item_params
-    params.require(:item).permit(:price)
+    params.require(:item).permit(:hero_id, :name, :image, :level, :element, :price)
   end
 
   def find_item

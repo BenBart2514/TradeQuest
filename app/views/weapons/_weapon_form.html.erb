@@ -1,5 +1,5 @@
 <%= form_with model: @weapon do |f| %>
-    <div class="d-flex flex-column align-items-center">
+    <div class="d-flex flex-column align-items-flex-start">
     <p>
         <%= f.label :name %>
         <%= f.text_field :name %>
@@ -18,7 +18,7 @@
     </p>
     <p>
         <%= f.label :enchant_id %>
-        <%= f.collection_select :enchant_id, @enchants, :id, :name %>
+        <%= f.collection_select :enchant_id, @enchants, :id, :name, {include_blank: 'None'} %>
     </p>
     <p>
         <%= f.submit %>
