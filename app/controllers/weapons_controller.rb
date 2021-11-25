@@ -91,7 +91,7 @@ class WeaponsController < ApplicationController
   end
 
   def approximate_value
-    @value = (@weapon.type.damage + @weapon.quality.modifier) *
+    @value = (@weapon.type.damage + @weapon.type.durability + (@weapon.quality.modifier * 2) - @weapon.uses) *
              (@weapon.type.durability + @weapon.quality.modifier - @weapon.uses)
     return if @weapon.enchant.nil?
 
