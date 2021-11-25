@@ -24,6 +24,10 @@
         |
         <%= link_to "Buy Weapon", buy_weapon_path(@weapon.id) %>
         <% end %>
+        <% if @weapon.price.nil? && @weapon.hero_id == @hero.id %>
+        |
+        <%= link_to "Sell Weapon", sell_weapon_path(@weapon.id) %>
+        <% end %>
         <% if policy(@weapon).edit? %>
             |
             <%= link_to "Edit", edit_weapon_path(@weapon) %>
