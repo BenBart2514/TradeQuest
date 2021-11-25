@@ -10,8 +10,8 @@
         <% unless @weapon.enchant.nil? %>
           <p>Enchantment Type: <%= @weapon.enchant.imbue.capitalize %></p>
         <% end %>
-        <% unless @item.price.nil? %>
-          <p>Price: <%= @item.price %> Gold</p>
+        <% unless @weapon.price.nil? %>
+          <p>Price: <%= @weapon.price %> Gold</p>
         <% end %>
     </div>
     <div class="col-sm">
