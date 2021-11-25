@@ -166,7 +166,7 @@ class QuestsController < ApplicationController
   end
 
   def success_roll
-    @roll = rand(1..100)
+    @roll = rand(0..100)
     @result = @roll + @true_success_chance
     @success = true if @result >= 100
     @bonus = true if @result > 200
@@ -184,7 +184,7 @@ class QuestsController < ApplicationController
 
   def gr_change
     if @success == true
-      @hero.gold += (@result / 2)
+      @hero.gold += (@roll + 50)
       @hero.renown += (@result / 2)
     elsif @hero.gold < 50
       @marked_for_death = true
