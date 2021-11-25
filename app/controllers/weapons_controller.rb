@@ -9,6 +9,8 @@ class WeaponsController < ApplicationController
   def buy
     if @hero.gold < @weapon.price
       flash[:alert] = "You don't have enough gold to pay for that!"
+    elsif @item.hero == @hero
+      buyback and return
     else
       @hero.update(gold: @hero.gold - @weapon.price)
       unless @weapon.hero.nil?

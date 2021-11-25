@@ -13,6 +13,8 @@ class ItemsController < ApplicationController
       purchase = Item.create(hero_id: @hero.id, name: @item.name, level: @item.level, element: @item.element)
       purchase.image.attach(io: File.open("app/assets/images/#{@item.element}#{@item.level}.png"),
                             filename: "#{@item.element}#{@item.level}.png", content_type: 'image/png')
+    elsif @item.hero == @hero
+      buyback and return
     else
       seller = @item.hero
       @hero.update(gold: @hero.gold - @item.price)

@@ -30,10 +30,12 @@ class MarketplaceController < ApplicationController
     @weapons.each do |weapon|
       @sale_weapons << weapon unless weapon.price.nil?
     end
+    @sale_weapons = @sale_weapons.sort_by(&:type)
 
     @items.each do |item|
       @sale_items << item unless item.price.nil?
     end
+    @sale_items = @sale_items.sort_by(&:price)
   end
 
   def find_hero
