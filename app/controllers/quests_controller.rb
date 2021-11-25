@@ -195,35 +195,35 @@ class QuestsController < ApplicationController
   end
 
   def bonus
-    bonus_roll = rand(1..3)
-    return unless bonus_roll == 3
+    bonus_roll = rand(1..10)
+    return unless bonus_roll > 5
 
     @bonus = true
 
-    if @result < 200
+    if @result > 250 && bonus_roll == 10
       case @quest.element
       when 'fire'
-        @bonus_loot = Weapon.create!(hero_id: @hero.id, name: "Pilgrim's Staff", quality: Quality.find(7),
-                                     type: Type.find(1), enchant: Enchant.find(4), uses: 0)
-        @bonus_loot.image.attach(io: File.open('app/assets/images/Pilgrim.png'),
-                                 filename: 'Pilgrim.png', content_type: 'image/png')
+        @bonus_loot = Weapon.create!(hero_id: @hero.id, name: 'Spear of the Scorpion Queen', quality: Quality.find(9),
+                                     type: Type.find(14), enchant: Enchant.find(12), uses: 0)
+        @bonus_loot.image.attach(io: File.open('app/assets/images/Scorpion.png'),
+                                 filename: 'Scorpion.png', content_type: 'image/png')
       when 'ice'
-        @bonus_loot = Weapon.create!(hero_id: @hero.id, name: 'Flame Legion Gladius', quality: Quality.find(7),
-                                     type: Type.find(3), enchant: Enchant.find(1), uses: 0)
-        @bonus_loot.image.attach(io: File.open('app/assets/images/Gladius.png'),
-                                 filename: 'Gladius.png', content_type: 'image/png')
+        @bonus_loot = Weapon.create!(hero_id: @hero.id, name: 'Scepter of Eternal Life', quality: Quality.find(9),
+                                     type: Type.find(15), enchant: Enchant.find(9), uses: 0)
+        @bonus_loot.image.attach(io: File.open('app/assets/images/Scepter.png'),
+                                 filename: 'Scepter.png', content_type: 'image/png')
       when 'nature'
-        @bonus_loot = Weapon.create!(hero_id: @hero.id, name: "Woodsman's Axe", quality: Quality.find(7),
-                                     type: Type.find(4), enchant: Enchant.find(10), uses: 0)
-        @bonus_loot.image.attach(io: File.open('app/assets/images/Woodaxe.png'),
-                                 filename: 'Woodaxe.png', content_type: 'image/png')
+        @bonus_loot = Weapon.create!(hero_id: @hero.id, name: 'Meteoric Battleaxe', quality: Quality.find(9),
+                                     type: Type.find(16), enchant: Enchant.find(3), uses: 0)
+        @bonus_loot.image.attach(io: File.open('app/assets/images/Meteoric.png'),
+                                 filename: 'Meteoric.png', content_type: 'image/png')
       when 'earth'
-        @bonus_loot = Weapon.create!(hero_id: @hero.id, name: 'Military Pick', quality: Quality.find(7),
-                                     type: Type.find(2), enchant: Enchant.find(7), uses: 0)
-        @bonus_loot.image.attach(io: File.open('app/assets/images/Pick.png'),
-                                 filename: 'Pick.png', content_type: 'image/png')
+        @bonus_loot = Weapon.create!(hero_id: @hero.id, name: "Stone Giant's Blade", quality: Quality.find(9),
+                                     type: Type.find(13), enchant: Enchant.find(6), uses: 0)
+        @bonus_loot.image.attach(io: File.open('app/assets/images/Giant.png'),
+                                 filename: 'Giant.png', content_type: 'image/png')
       end
-    elsif @result < 250
+    elsif @result > 200 && bonus_roll >= 8
       case @quest.element
       when 'fire'
         @bonus_loot = Weapon.create!(hero_id: @hero.id, name: "Pharaoh's Kopesh", quality: Quality.find(8),
@@ -249,25 +249,25 @@ class QuestsController < ApplicationController
     else
       case @quest.element
       when 'fire'
-        @bonus_loot = Weapon.create!(hero_id: @hero.id, name: 'Spear of the Scorpion Queen', quality: Quality.find(9),
-                                     type: Type.find(14), enchant: Enchant.find(12), uses: 0)
-        @bonus_loot.image.attach(io: File.open('app/assets/images/Scorpion.png'),
-                                 filename: 'Scorpion.png', content_type: 'image/png')
+        @bonus_loot = Weapon.create!(hero_id: @hero.id, name: "Pilgrim's Staff", quality: Quality.find(7),
+                                     type: Type.find(1), enchant: Enchant.find(4), uses: 0)
+        @bonus_loot.image.attach(io: File.open('app/assets/images/Pilgrim.png'),
+                                 filename: 'Pilgrim.png', content_type: 'image/png')
       when 'ice'
-        @bonus_loot = Weapon.create!(hero_id: @hero.id, name: 'Scepter of Eternal Life', quality: Quality.find(9),
-                                     type: Type.find(15), enchant: Enchant.find(9), uses: 0)
-        @bonus_loot.image.attach(io: File.open('app/assets/images/Scepter.png'),
-                                 filename: 'Scepter.png', content_type: 'image/png')
+        @bonus_loot = Weapon.create!(hero_id: @hero.id, name: 'Flame Legion Gladius', quality: Quality.find(7),
+                                     type: Type.find(3), enchant: Enchant.find(1), uses: 0)
+        @bonus_loot.image.attach(io: File.open('app/assets/images/Gladius.png'),
+                                 filename: 'Gladius.png', content_type: 'image/png')
       when 'nature'
-        @bonus_loot = Weapon.create!(hero_id: @hero.id, name: 'Meteoric Battleaxe', quality: Quality.find(9),
-                                     type: Type.find(16), enchant: Enchant.find(3), uses: 0)
-        @bonus_loot.image.attach(io: File.open('app/assets/images/Meteoric.png'),
-                                 filename: 'Meteoric.png', content_type: 'image/png')
+        @bonus_loot = Weapon.create!(hero_id: @hero.id, name: "Woodsman's Axe", quality: Quality.find(7),
+                                     type: Type.find(4), enchant: Enchant.find(10), uses: 0)
+        @bonus_loot.image.attach(io: File.open('app/assets/images/Woodaxe.png'),
+                                 filename: 'Woodaxe.png', content_type: 'image/png')
       when 'earth'
-        @bonus_loot = Weapon.create!(hero_id: @hero.id, name: "Stone Giant's Blade", quality: Quality.find(9),
-                                     type: Type.find(13), enchant: Enchant.find(6), uses: 0)
-        @bonus_loot.image.attach(io: File.open('app/assets/images/Giant.png'),
-                                 filename: 'Giant.png', content_type: 'image/png')
+        @bonus_loot = Weapon.create!(hero_id: @hero.id, name: 'Military Pick', quality: Quality.find(7),
+                                     type: Type.find(2), enchant: Enchant.find(7), uses: 0)
+        @bonus_loot.image.attach(io: File.open('app/assets/images/Pick.png'),
+                                 filename: 'Pick.png', content_type: 'image/png')
       end
     end
   end
@@ -344,37 +344,37 @@ class QuestsController < ApplicationController
 
     @weapon_drop = true
 
-    type_roll = rand(1..6)
-    type = if type_roll < 3
-             rand(1..4)
-           elsif type_roll < 6
+    type_roll = rand(1..10)
+    type = if type_roll >= 9
+             rand(13..18)
+           elsif type_roll >= 4
              rand(5..12)
            else
-             rand(13..18)
+             rand(1..4)
            end
     quality_roll = rand(1..20)
-    quality = if quality_roll < 3
-                1
-              elsif quality_roll < 7
-                2
-              elsif quality_roll < 14
-                3
-              elsif quality_roll < 18
-                4
-              elsif quality_roll < 20
-                5
-              else
+    quality = if quality_roll == 20
                 6
+              elsif quality_roll >= 18
+                5
+              elsif quality_roll >= 14
+                4
+              elsif quality_roll >= 7
+                3
+              elsif quality_roll >= 3
+                2
+              else
+                1
               end
     enchant_roll = rand(1..10)
     enchant = if enchant_roll < 5
                 nil
-              elsif enchant_roll < 8
-                Enchant.find_by(bonus: 8, imbue: @quest.element)
-              elsif enchant_roll < 10
+              elsif enchant_roll == 10
+                Enchant.find_by(bonus: 20, imbue: @quest.element)
+              elsif enchant_roll >= 8
                 Enchant.find_by(bonus: 14, imbue: @quest.element)
               else
-                Enchant.find_by(bonus: 20, imbue: @quest.element)
+                Enchant.find_by(bonus: 8, imbue: @quest.element)
               end
     @new_weapon = Weapon.create(hero_id: @hero.id, type: Type.find_by(id: type), quality: Quality.find_by(id: quality),
                                 enchant: Enchant.find_by(id: enchant), uses: 0)
