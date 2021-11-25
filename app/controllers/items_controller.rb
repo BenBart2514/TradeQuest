@@ -6,6 +6,7 @@ class ItemsController < ApplicationController
   before_action :check_stock, only: %i[buy]
 
   def buy
+
     if @hero.gold < @item.price
       flash[:alert] = "You don't have enough gold to pay for that!"
     elsif @item.hero.nil?
@@ -24,7 +25,9 @@ class ItemsController < ApplicationController
     redirect_to root_path, notice: "#{@item.name} has been added to your inventory"
   end
 
-  def sell; end
+  def sell
+    @hero.equipment.update(item_id: nil)
+  end
 
   def buyback
     @item.update(price: nil)

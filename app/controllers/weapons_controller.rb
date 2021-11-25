@@ -23,6 +23,7 @@ class WeaponsController < ApplicationController
   end
 
   def sell
+    @hero.equipment.update(weapon_id: nil)
     approximate_value
     @value /= 2
   end
