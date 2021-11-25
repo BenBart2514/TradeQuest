@@ -7,6 +7,9 @@
     <div class="col-sm">
         <p>Level: <%= @item.level %></p>
         <p>Element: <%= @item.element.capitalize %></p>
+        <% unless @item.price.nil? %>
+          <p>Price: <%= @item.price %> Gold</p>
+        <% end %>
     </div>
     <div class="col-sm">
         <% if @item.image.attached? %>
