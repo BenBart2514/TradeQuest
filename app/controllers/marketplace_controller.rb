@@ -14,8 +14,10 @@ class MarketplaceController < ApplicationController
     @page_name = 'Marketplace'
     @top_link = 'Questing'
     @link_path = questing_path
-    @sale_weapons = Weapon.where('name ILIKE ?', "%#{params[:query]}%")
-    @sale_items = Item.where('name ILIKE ?', "%#{params[:query]}%")
+    @hero_weapons = @hero_weapons.where('name ILIKE ?', "%#{params[:query]}%")
+    @hero_items = @hero_items.where('name ILIKE ?', "%#{params[:query]}%")
+    @sale_weapons = @sale_weapons.where('name ILIKE ?', "%#{params[:query]}%")
+    @sale_items = @sale_items.where('name ILIKE ?', "%#{params[:query]}%")
     render 'index'
   end
 
