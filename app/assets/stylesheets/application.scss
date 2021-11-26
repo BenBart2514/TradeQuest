@@ -14,10 +14,10 @@
  *= require_self
  */
 
- * {
-    margin: 0;
-    box-sizing: border-box;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+* {
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
 }
 
 main {
@@ -27,71 +27,70 @@ main {
 }
 
 #header {
-    background-image: url(asset_path('header.jpg'));
-    background-size: cover;
-    background-position: 0%;
-    height: 200px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    h1 {
-        font-size: 250%;
-        font-weight: bold;
-        color: orangered;
-        text-shadow: 1px 1px 2px black;
-    }
+  background-image: url(asset_path("header.jpg"));
+  background-size: cover;
+  background-position: 0%;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  h1 {
+    font-size: 250%;
+    font-weight: bold;
+    color: orangered;
+    text-shadow: 1px 1px 2px black;
+  }
 }
 
 #topnav {
-    display: flex;
-    justify-content: space-evenly;
+  display: flex;
+  justify-content: space-evenly;
 }
 
 #char_stats {
-    display: flex;
-    justify-content: space-between;
-    margin: 5px 10%;
+  display: flex;
+  justify-content: space-between;
+  margin: 5px 10%;
 }
 
 #messages {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center
-    ;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .account {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  h3 {
+    margin: 5px 10px;
+  }
+  p {
     display: flex;
+    align-self: center;
     flex-direction: column;
-    align-items: center;
-    h3 {
-        margin: 5px 10px;
-    }
-    p {
-        display: flex;
-        align-self: center;
-        flex-direction: column;
-    }
+  }
 }
 
 .field {
-    margin-bottom: 10px ;
+  margin-bottom: 10px;
 }
 
 .sale_form {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 @media only screen and (max-width: 425px) {
-    * {
-        font-size: .8rem;
-    }
+  * {
+    font-size: 0.8rem;
+  }
 }
 
 @media only screen and (min-width: 960px) {
-    * {
-        font-size: 1.2rem;
-    }
+  * {
+    font-size: 1.2rem;
+  }
 }

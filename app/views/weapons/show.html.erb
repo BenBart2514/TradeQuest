@@ -8,7 +8,7 @@
         <p>Damage: <%= @weapon.type.damage + (@weapon.quality.modifier * 2) + @weapon.type.durability - @weapon.uses %></p>
         <p>Durability: <%= @weapon.type.durability + @weapon.quality.modifier - @weapon.uses %>/<%= @weapon.type.durability + @weapon.quality.modifier %></p>
         <% unless @weapon.enchant.nil? %>
-          <p>Enchantment Type: <%= @weapon.enchant.imbue.capitalize %></p>
+          <p>Enchantment: +<%= @weapon.enchant.bonus %> <%= @weapon.enchant.imbue.capitalize %> Damage</p>
         <% end %>
         <% unless @weapon.price.nil? %>
           <p>Price: <%= @weapon.price %> Gold</p>

@@ -1,4 +1,6 @@
 class Weapon < ApplicationRecord
+  scope :for_sale, -> { where.not(price: nil).order(:type_id, :quality_id, :enchant_id, :price) }
+
   belongs_to :hero, optional: true
   belongs_to :quality
   belongs_to :type

@@ -3,54 +3,54 @@
 // You can use Sass (SCSS) here: https://sass-lang.com/
 
 table {
-    justify-content: space-between;
+  justify-content: space-between;
 }
 
 #inventory_table {
-    margin-bottom: 0px;
+  margin-bottom: 0px;
 }
 
 #weapons_table {
-    margin-bottom: 0px;
+  margin-bottom: 0px;
 }
 
 #items_table {
-    margin-bottom: 0px;
+  margin-bottom: 0px;
 }
 
 .inventory_scrollbar {
-    border: 1px solid grey;
-    position: relative;
-    height: fit-content;
-    max-height: 300px;
-    overflow: scroll;
-    margin-bottom: 1rem;
+  border: 1px solid grey;
+  position: relative;
+  height: fit-content;
+  max-height: 400px;
+  overflow: scroll;
+  margin-bottom: 1rem;
 }
 
 .shop_scrollbar {
-    border: 1px solid grey;
-    position: relative;
-    height: fit-content;
-    max-height: 600px;
-    width: 100%;
-    overflow: scroll;
-    margin-bottom: 1rem;
+  border: 1px solid grey;
+  position: relative;
+  height: fit-content;
+  max-height: 600px;
+  width: 100%;
+  overflow: scroll;
+  margin-bottom: 1rem;
 }
 
 @media only screen and (max-width: 425px) {
-    #inventory {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    .inventory_scrollbar {
-        max-height: 200px;
-        width: 95%;
-        margin-bottom: 40px;
-    }
-    .shop_scrollbar {
-        max-height: 300px;
-        width: 95%;
-        margin-bottom: 40px;
-    }
+  #inventory {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .inventory_scrollbar {
+    max-height: 200px;
+    width: 95%;
+    margin-bottom: 40px;
+  }
+  .shop_scrollbar {
+    max-height: 300px;
+    width: 95%;
+    margin-bottom: 40px;
+  }
 }

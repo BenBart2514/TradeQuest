@@ -1,44 +1,37 @@
 class MarketplaceController < ApplicationController
   before_action :check_hero_exists
   before_action :find_hero
+  before_action :create_inventory
+  before_action :build_listings
 
   def index
     @page_name = 'Marketplace'
     @top_link = 'Questing'
     @link_path = questing_path
-    @weapons = Weapon.all
-    @items = Item.all
-    build_listings
   end
 
   def search
     @page_name = 'Marketplace'
     @top_link = 'Questing'
     @link_path = questing_path
-    @weapons = Weapon.where('name ILIKE ?', "%#{params[:query]}%")
-    @items = Item.where('name ILIKE ?', "%#{params[:query]}%")
-    build_listings
+    @sale_weapons = Weapon.where('name ILIKE ?', "%#{params[:query]}%")
+    @sale_items = Item.where('name ILIKE ?', "%#{params[:query]}%")
     render 'index'
   end
 
   private
 
-  def build_listings
-    @sale_weapons = []
-    @sale_items = []
-
-    @weapons.each do |weapon|
-      @sale_weapons << weapon unless weapon.price.nil?
-    end
-    @sale_weapons = @sale_weapons.sort_by(&:type)
-
-    @items.each do |item|
-      @sale_items << item unless item.price.nil?
-    end
-    @sale_items = @sale_items.sort_by(&:price)
-  end
-
   def find_hero
     @hero = current_user.hero
+  end
+
+  def build_listings
+    @sale_weapons = Weapon.for_sale
+    @sale_items = Item.for_sale
+  end
+
+  def create_inventory
+    @hero_weapons = @hero.weapons.order(:type_id, :name)
+    @hero_items = @hero.items.order(:level, :element)
   end
 end

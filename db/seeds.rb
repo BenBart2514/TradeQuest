@@ -43,8 +43,8 @@ fine = Quality.create!(name: 'Fine', modifier: 2)            # 20% (14-17)
 strong = Quality.create!(name: 'Strong', modifier: 5)        # 10% (18-19)
 master = Quality.create!(name: 'Masterwork', modifier: 10)   # 5%  (20)
 # Uniques #
-rare = Quality.create!(name: 'Rare', modifier: 4)
-epic = Quality.create!(name: 'Epic', modifier: 7)
+rare = Quality.create!(name: 'Rare', modifier: 6)
+epic = Quality.create!(name: 'Epic', modifier: 9)
 legendary = Quality.create!(name: 'Legendary', modifier: 12)
 
 ## ENCHANTS ##

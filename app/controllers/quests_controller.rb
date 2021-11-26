@@ -29,11 +29,12 @@ class QuestsController < ApplicationController
     damage_weapon unless @current_weapon == 'None'
     @hero.update(quest_id: rand(1..4))
 
-    p 'death, weapon, success, bonus'
-    p @marked_for_death
-    p @weapon_drop
-    p @success
-    p @bonus
+    # Debugging tools
+    # p 'death, weapon, success, bonus'
+    # p @marked_for_death
+    # p @weapon_drop
+    # p @success
+    # p @bonus
 
     if @marked_for_death == true
       @equipment.update(weapon_id: nil, item_id: nil)
@@ -169,7 +170,7 @@ class QuestsController < ApplicationController
     @roll = rand(0..100)
     @result = @roll + @true_success_chance
     @success = true if @result >= 100
-    bonus if @result > 150
+    bonus if @result >= 200
   end
 
   def fate_roll
@@ -196,11 +197,11 @@ class QuestsController < ApplicationController
 
   def bonus
     bonus_roll = rand(1..10)
-    return unless bonus_roll > 5
+    return unless bonus_roll >= 8 # 30% chance of granting bonus
 
     @bonus = true
 
-    if @result > 250 && bonus_roll == 10
+    if @result >= 275 && bonus_roll == 10
       case @quest.element
       when 'fire'
         @bonus_loot = Weapon.create!(hero_id: @hero.id, name: 'Spear of the Scorpion Queen', quality: Quality.find(9),
@@ -223,7 +224,7 @@ class QuestsController < ApplicationController
         @bonus_loot.image.attach(io: File.open('app/assets/images/Giant.png'),
                                  filename: 'Giant.png', content_type: 'image/png')
       end
-    elsif @result > 200 && bonus_roll >= 8
+    elsif @result >= 250 && bonus_roll >= 9
       case @quest.element
       when 'fire'
         @bonus_loot = Weapon.create!(hero_id: @hero.id, name: "Pharaoh's Kopesh", quality: Quality.find(8),
@@ -339,8 +340,8 @@ class QuestsController < ApplicationController
   end
 
   def weapon_drop
-    weapon_roll = rand(1..5)
-    return unless weapon_roll == 5
+    weapon_roll = rand(1..4)
+    return unless weapon_roll == 4
 
     @weapon_drop = true
 

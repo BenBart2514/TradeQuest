@@ -19,7 +19,7 @@ class HerosController < ApplicationController
     begin
       @hero.save!
       Equipment.create(hero_id: @hero.id)
-      first = Weapon.create(hero_id: @hero.id, name: 'Plain Sword', quality: Quality.find(3), type: Type.find(5),
+      first = Weapon.create(hero_id: @hero.id, name: 'Old Sword', quality: Quality.find(1), type: Type.find(5),
                             uses: 0)
     rescue StandardError
       flash[:alert] = @hero.errors.full_messages.flatten.join(', ')
