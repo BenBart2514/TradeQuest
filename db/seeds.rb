@@ -132,7 +132,7 @@ end
 3.times do
   x = Weapon.create!(quality: Quality.find(4..5), type: Type.find(rand(13..18)),
                      enchant: Enchant.find(rand(1..12)), uses: 0)
-  x.update(name: "#{x.quality.name} #{x.type.name}")
+  x.update(name: "#{x.quality.name} #{x.type.name} of #{x.enchant.name}")
   x.update(price: ((x.type.damage + x.quality.modifier) * (x.type.durability + x.quality.modifier) +
            (x.enchant.bonus * (x.type.durability + x.quality.modifier)) / 2))
   x.image.attach(io: File.open("app/assets/images/#{x.type.name}.png"),
