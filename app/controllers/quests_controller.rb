@@ -54,7 +54,7 @@ class QuestsController < ApplicationController
       else
         flash[:alert] = "#{@reward.name} was added to your inventory."
       end
-      redirect_to questing_path, notice: "Quest Successful! You've earned #{@result / 2} Gold and Renown."
+      redirect_to questing_path, notice: "Quest Successful! You've earned #{@roll + 50} Gold and #{@result / 2} Renown."
     elsif bonus == true && @success == false
       flash[:alert] = "However, you managed to find a #{@bonus_loot.name} on your way home!"
       redirect_to questing_path, notice: "Quest Failed! #{@hero.name} lost 50 Gold 1 Life point."
